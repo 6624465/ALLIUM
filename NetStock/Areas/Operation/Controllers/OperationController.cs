@@ -800,13 +800,7 @@ namespace NetStock.Areas.Operation.Controllers
                     order.TotalAmount = order.OrderDetails.Sum(dt => dt.SellPrice);
                 }
             }
-
-
-
             return Json(new { success = true });
-
-
-
         }
 
         [Route("Orders")]
