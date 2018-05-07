@@ -664,13 +664,23 @@ namespace NetStock.Areas.MasterData.Controllers
 
         }
 
+        [HttpGet]
+        [Route("CheckCustomerExist")]
+        public ActionResult CheckCustomerExist(string CustomerCode)
+        {
+            var customerCount = new NetStock.BusinessFactory.CustomerBO().GetList().Where(cs => cs.CustomerType == "CUSTOMER" && cs.CustomerCode== CustomerCode).Count();
+            if (customerCount != 0)
+                return Json(true, JsonRequestBehavior.AllowGet);
+            else
+                return Json(false, JsonRequestBehavior.AllowGet);
+        }
         [Route("EditCustomer")]
         [HttpGet]
         public ActionResult EditCustomer(string customerCode)
         {
             NetStock.Contract.Customer customer = new Contract.Customer();
 
-            if (customerCode == "NEW" || customerCode == "" || customerCode==null)
+            if (customerCode == "NEW" || customerCode == "" || customerCode == null)
             {
                 //customer.CustomerCode = customerCode;
                 customer.CustomerCode = "";
@@ -729,7 +739,7 @@ namespace NetStock.Areas.MasterData.Controllers
                 {
                     TempData["isSaved"] = result;
                     TempData["resultMessage"] = string.Format("Customer Details [{0}] Saved Successfully", customer.CustomerCode);
-                }                 
+                }
                 else
                     TempData["resultMessage"] = "Unable to Save the Record!";
 

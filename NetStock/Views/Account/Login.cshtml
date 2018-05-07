@@ -10,32 +10,32 @@
 <link href="@Url.Content("~/Content/bootstrap.css")" rel="stylesheet" />
 <link href="@Url.Content("~/Content/AdminLTE.css")" rel="stylesheet" />
 <style type="text/css">
-        input[type=text].error, input[type=password].error, textarea.error, select.error {
-            border: 1px solid red;
-        }
+    input[type=text].error, input[type=password].error, textarea.error, select.error {
+        border: 1px solid red;
+    }
 
-        label.error {
-            display: none !important;
-        }
+    label.error {
+        display: none !important;
+    }
 
-        html, body {
-          min-height: 60%;
-        }
+    html, body {
+        min-height: 60%;
+    }
 
-        @@font-face {
-            font-family: 'proximanovalight';
-            src: url('../fonts/proximanovalight.eot');
-            src: local('proximanovalight'), url('../fonts/proximanovalight.woff') format('woff'), url('../fonts/proximanovalight.ttf') format('truetype');
-        }
+    @@font-face {
+        font-family: 'proximanovalight';
+        src: url('../fonts/proximanovalight.eot');
+        src: local('proximanovalight'), url('../fonts/proximanovalight.woff') format('woff'), url('../fonts/proximanovalight.ttf') format('truetype');
+    }
 
-        body {
-            font-family: 'proximanovalight';
-        }
+    body {
+        font-family: 'proximanovalight';
+    }
 
-        .fontsforweb_fontid_12950 {
-            font-family: 'proximanovalight' !important;
-        }
-    </style>
+    .fontsforweb_fontid_12950 {
+        font-family: 'proximanovalight' !important;
+    }
+</style>
 <body class="login-page">
     <div class="login-box">
         <div class="login-logo">
@@ -48,6 +48,7 @@
                 @Html.AntiForgeryToken()
                 <div class="form-group has-feedback">
                     @Html.DropDownListFor(m => m.CompanyCode, Model.CompaniesList, "Select Company", new { @class = "form-control input-sm" })
+                    @*@Html.DropDownListFor(m => m.CompanyCode, Model.CompaniesList, null, new {value="1001" ,Text= "ALLIUM FOODS PVT LTD", @class = "form-control input-sm",@readonly="readonly" })*@
                 </div>
                 <div class="form-group has-feedback">
                     @if (Model.BranchList != null)
@@ -57,10 +58,11 @@
                     else
                     {
                         <select id="BranchID" name="BranchID" class="form-control input-sm" disabled="disabled">
-                            <option value="">Select Branch
+                            <option value="">
+                                Select Branch
                             </option>
                         </select>
-                    }                    
+                    }
                 </div>
                 <div class="form-group has-feedback">
                     @Html.TextBoxFor(m => m.Email, new { @class = "form-control input-sm", @placeholder = "User ID" })
@@ -70,8 +72,8 @@
                 </div>
                 <div class="form-group has-feedback">
                     <button type="button" class="btn btn-primary btn-block btn-sm" onclick="btnLoginClick();"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;Sign In</button>
-                </div>                  
-                <input type="hidden" name="hdnBranchSelected" id="hdnBranchSelected" />             
+                </div>
+                <input type="hidden" name="hdnBranchSelected" id="hdnBranchSelected" />
             }
         </div>
     </div>
@@ -82,7 +84,7 @@
 <script src="@Url.Content("~/Scripts/bootstrap.js")"></script>
 
 <script>
-    function OnBranchChanged(el) {        
+    function OnBranchChanged(el) {
         $('#hdnBranchSelected').val($('#BranchID option:selected').text());
     }
 
@@ -92,10 +94,10 @@
             sessionStorage.setItem('SsnLoginID', $('#Email').val());
             sessionStorage.setItem('SsnPassword', $('#Password').val());
             $('#frmLogin').attr('action', '@Url.Content("~/Account/Login?companyCode=")' + compCode)
-            $('#frmLogin').submit();            
+            $('#frmLogin').submit();
         });
 
-        
+
     });
 
     function LoginFrmValidation() {

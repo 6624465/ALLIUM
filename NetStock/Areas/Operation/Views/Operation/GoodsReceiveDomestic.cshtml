@@ -81,32 +81,32 @@
         documentNo = Request.QueryString["documentNo"];
     }
 
-    List<NetStock.Areas.Operation.Controllers.file> fileList = new List<NetStock.Areas.Operation.Controllers.file>();
-    var documentFolder = Server.MapPath("~/UploadImages/") + documentNo;
+    //List<NetStock.Areas.Operation.Controllers.file> fileList = new List<NetStock.Areas.Operation.Controllers.file>();
+    //var documentFolder = Server.MapPath("~/UploadImages/") + documentNo;
 
-    var dirInfo = new System.IO.DirectoryInfo(documentFolder);
-    if (!dirInfo.Exists)
-    {
-        dirInfo.Create();
-    }
+    //var dirInfo = new System.IO.DirectoryInfo(documentFolder);
+    //if (!dirInfo.Exists)
+    //{
+    //    dirInfo.Create();
+    //}
 
-    var filesLst = dirInfo.GetFiles();
-    if (filesLst.Count() > 0)
-    {
-        foreach (var file in filesLst)
-        {
-            var item = new NetStock.Areas.Operation.Controllers.file();
-            item.name = file.Name;
-            item.size = Convert.ToInt32(file.Length);
-            item.url = "~/UploadImages/" + documentNo + "//" + file.Name;
-            item.thumbnailUrl = "~/UploadImages/" + documentNo + "//" + file.Name;
-            item.error = "";
-            item.deleteUrl = "";
-            item.deleteType = "";
+    //var filesLst = dirInfo.GetFiles();
+    //if (filesLst.Count() > 0)
+    //{
+    //    foreach (var file in filesLst)
+    //    {
+    //        var item = new NetStock.Areas.Operation.Controllers.file();
+    //        item.name = file.Name;
+    //        item.size = Convert.ToInt32(file.Length);
+    //        item.url = "~/UploadImages/" + documentNo + "//" + file.Name;
+    //        item.thumbnailUrl = "~/UploadImages/" + documentNo + "//" + file.Name;
+    //        item.error = "";
+    //        item.deleteUrl = "";
+    //        item.deleteType = "";
 
-            fileList.Add(item);
-        }
-    }
+    //        fileList.Add(item);
+    //    }
+    //}
 }
 
 @using (Html.BeginForm("SearchPO", "Operation", FormMethod.Post, new { id = "frmSearch" }))
@@ -188,12 +188,12 @@
                         <li class="active">
                             <a href="#tbDetails" data-toggle="tab">Supplier Product List</a>
                         </li>
-                        @if (documentNo != "NEW")
+                        @*@if (documentNo != "NEW")
                         {
                             <li>
                                 <a href="#tabImages" data-toggle="tab">Upload Images</a>
                             </li>
-                        }
+                        }*@
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="tbDetails">
@@ -303,9 +303,9 @@
 
                         </div>
                         <!-- File Upload -->
-                        @if (documentNo != "NEW")
-                        {
-                            <div id="tabImages" class="tab-pane">
+                        @*@if (documentNo != "NEW")
+                        {*@
+                            @*<div id="tabImages" class="tab-pane">
                                 <div class="row">
                                     <div class="col-md-2">
                                         @if (fileList.Count < 10)
@@ -351,8 +351,8 @@
                                         }
                                     </div>
                                 </div>
-                            </div>
-                        }
+                            </div>*@
+                        @*}*@
                     </div>
                 </div>
             </fieldset>
@@ -411,7 +411,7 @@
 
                     <div class="pull-right">
 
-                        @if (!string.IsNullOrEmpty(Model.CreatedBy) && !string.IsNullOrEmpty(Model.CreatedOn.ToString()))
+                        @*@if (!string.IsNullOrEmpty(Model.CreatedBy) && !string.IsNullOrEmpty(Model.CreatedOn.ToString()))
                         {
                             <label class="control-label">
                                 Created By / On : @Model.CreatedBy / @Model.CreatedOn.ToString("dd/MM/yyyy hh:mm tt")  &nbsp;&nbsp;&nbsp;&nbsp;
@@ -423,7 +423,7 @@
                             <label class="control-label">
                                 Modified By / On : @Model.ModifiedBy / @Model.ModifiedOn.ToString("dd/MM/yyyy hh:mm tt")  &nbsp;&nbsp;&nbsp;&nbsp;
                             </label>
-                        }
+                        }*@
 
 
                         <a href="@Url.Action("GoodsReceiveList", "Operation", new { area = "Operation" }, null)" class="btn btn-sm btn-info pull-right">
@@ -476,6 +476,24 @@
             $('[data-toggle="popover"]').popover({
                 trigger: 'hover'
             });
+            //$(".Recqty").keypress(function (index, flag) {
+            //    debugger;
+            //    var pendingQty = parseFloat($('#PendingQty_' + index).val().replace(',','')); //gPendingQuantity;
+            //    var receivedQty = parseFloat($('#GoodsReceivePODetailList_' + index + '__ReceiveQuantity').val().replace(',', ''));
+            //    var Qty = parseFloat($('#GoodsReceivePODetailList_' + index + '__Quantity').val().replace(',', ''));
+            //    if (receivedQty == "")               
+            //    parseFloat($('#PendingQty_' + index).val(Qty))
+            //else
+            //{
+            //        var Qty = parseFloat($('#GoodsReceivePODetailList_' + index + '__Quantity').val());
+            //    if ((pendingQty - receivedQty) < 0) {
+            //        alert('Received Quantity cannot be more than pending Quantity');
+            //        $('#GoodsReceivePODetailList_' + index + '__ReceiveQuantity').val('0');
+            //    } else {
+            //        $('#PendingQty_' + index).val(pendingQty - receivedQty);
+            //    }
+            //}
+            //});
         });
 
 
@@ -1485,21 +1503,22 @@
             }
         }
 
-        $(".Recqty").keyup(function (index, flag) {
+        //$(".Recqty").keyup(function (index, flag) {
 
-            var pendingQty = parseFloat($('#PendingQty_' + index).val()); //gPendingQuantity;
-            var receivedQty = parseFloat($('#GoodsReceivePODetailList_' + index + '__ReceiveQuantity').val());
-            var Qty = parseFloat($('#GoodsReceivePODetailList_' + index + '__Quantity').val());
-            if ((pendingQty - receivedQty) < 0) {
-                alert('Received Quantity cannot be more than pending Quantity');
-                $('#GoodsReceivePODetailList_' + index + '__ReceiveQuantity').val('0');
-            } else {
-                $('#PendingQty_' + index).val(pendingQty - receivedQty);
-            }
-        });
+        //    var pendingQty = parseFloat($('#PendingQty_' + index).val()); //gPendingQuantity;
+        //    var receivedQty = parseFloat($('#GoodsReceivePODetailList_' + index + '__ReceiveQuantity').val());
+        //    var Qty = parseFloat($('#GoodsReceivePODetailList_' + index + '__Quantity').val());
+        //    if ((pendingQty - receivedQty) < 0) {
+        //        alert('Received Quantity cannot be more than pending Quantity');
+        //        $('#GoodsReceivePODetailList_' + index + '__ReceiveQuantity').val('0');
+        //    } else {
+        //        $('#PendingQty_' + index).val(pendingQty - receivedQty);
+        //    }
+        //});
         function ReceivedQtyOnblur(index, flag) {
+            debugger;
             var pendingQty = parseFloat($('#PendingQty_' + index).val()); //gPendingQuantity;
-            var receivedQty = parseFloat($('#GoodsReceivePODetailList_' + index + '__ReceiveQuantity').val());
+            var receivedQty = $('#GoodsReceivePODetailList_' + index + '__ReceiveQuantity').val();
             //if (flag) {
             //    receivedQty = receivedQty + parseInt($('#hdn_ReceiveQuantity_' + index).val());
             //}

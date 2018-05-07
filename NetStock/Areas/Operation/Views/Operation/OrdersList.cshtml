@@ -39,7 +39,9 @@
                                     <th>Order No.</th>
                                     <th>Order Date</th>
                                     <th>Customer Name</th>
-                                    <th>Payment Type</th>
+                                    <th>Delivery Date</th>
+                                    <th>Net Amount</th>
+                                    @*<th>Payment Type</th>*@
                                 </tr>
                             </thead>
                             <tbody style="font-size: 12px;">
@@ -59,8 +61,10 @@
                                             <td>@item.OrderNo</td>
                                         }
                                         <td>@item.OrderDate.ToString("dd-MM-yyyy") </td>
-                                        <td>@item.CustomerCode </td>
-                                        <td>@item.PaymentTypeDescription</td>
+                                        <td>@item.CustomerName </td>
+                                        <td>@item.DeliveryDate</td>
+                                        <td>@item.NetAmount</td>
+                                        @*<td>@item.PaymentTypeDescription</td>*@
                                     </tr>
                                     }
                                 }

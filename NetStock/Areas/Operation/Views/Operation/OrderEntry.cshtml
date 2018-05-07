@@ -58,11 +58,11 @@
                 </div>
                 <div class="form-group">
                     <div>
-                        <label for="txtInvoiceNo" class="col-md-2 control-label input-sm">SO Number.</label>
+                        <label for="txtOrderNo" class="col-md-2 control-label input-sm">SO Number.</label>
                         <div class="col-md-3">
                             @Html.TextBoxFor(m => m.OrderNo, new { @id = "txtOrderNo", @class = "form-control input-sm", @readonly = "readonly", @maxlength = "50" })
                         </div>
-                        <label for="txtInvoiceNo" class="col-md-2 control-label input-sm">Delivery Date</label>
+                        <label for="DeliveryDate" class="col-md-2 control-label input-sm">Delivery Date</label>
                         <div class="col-md-3">
                             @Html.TextBoxFor(m => m.DeliveryDate, new { @class = "form-control input-sm datepicker" })
                         </div>
@@ -102,9 +102,9 @@
                         <div class="col-md-3">
                             @Html.TextBoxFor(m => m.SalesLead, new { @class = "form-control input-sm", @readonly = "readonly" })
                         </div>
-                        <label for="txtInvoiceNo" class="col-md-2 control-label input-sm">Price Per UNIT</label>
+                        <label for="txtInvoiceNo" class="col-md-2 control-label input-sm">Invoice NO</label>
                         <div class="col-md-3">
-                            @Html.TextBoxFor(m => m.CostCentre, new { @class = "form-control input-sm", @readonly = "readonly", Value = "SALES REVENUE" })
+                            @Html.TextBoxFor(m => m.OrderNo, new { @class = "form-control input-sm", @readonly = "readonly" })
                         </div>
                     </div>
                 </div>
@@ -155,7 +155,7 @@
                 <div class="form-group">
                     <label class="col-md-2 control-label input-sm">Product</label>
                     <div class="col-md-3">
-                        @Html.Hidden("SelectedCustomer")
+                       @Html.Hidden("SelectedCustomer")
                         @*@Html.TextBox("txtSearchProductAdd", "", new { @id = "txtSearchProductAdd", @class = "form-control input-sm", @placeholder = "Enter barcode or Product Description" })*@
                         @*@Html.DropDownList("Products", new SelectList(Utility.GetProductList(), "Value", "Text", ""), "Select Product", new { @class = "form-control input-sm", onchange = "Products_OnChange(this);" })*@
                         @Html.DropDownList("Products", new SelectList(Utility.GetProductList(), "Value", "Text", ""), "Select Product", new { @class = "form-control input-sm", onchange = "Products_OnChange(this)" })
@@ -294,7 +294,7 @@
                                                 @*<img class="img-class" src="~/Images/fa-trash-o_22.png" onclick="DeleteDetails(this,'chk_@itr','RecordStatus_@itr','@itr')" />*@
                                                 @if (HtmlHelpers.hasRight("SalesEntry(ForeCast)Delete"))
                                                 {
-                                                    <button type="button" class="btn btn-default btn-sm" onclick="DeleteDetails('@(itr+1)')"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                                    <button type="button" class="btn btn-default btn-sm" onclick="DeleteDetails('@(itr)')"><i class="fa fa-trash" aria-hidden="true"></i></button>
                                                 }
                                             </td>
                                         </tr>
@@ -402,7 +402,7 @@
                         <div>
                             <label for="txtInvoiceNo" class="col-md-4 control-label input-sm">Net Amt</label>
                             <div class="pull-right col-sm-4">
-                                @Html.TextBoxFor(m => m.NetAmount, new { @Value = Model.NetAmount.ToString("###,##0.00"), @class = "form-control input-sm-green", @id = "txtNetAmount", @align = "right", @readonly = "true" })
+                                @Html.TextBoxFor(m => m.NetAmount, new { @Value = Model.NetAmount.ToString("###,##0"), @class = "form-control input-sm-green", @id = "txtNetAmount", @align = "right", @readonly = "true" })
                             </div>
 
                         </div>
@@ -537,7 +537,7 @@
 
             $('.datepicker').datetimepicker({
                 useCurrent: false,
-                //format: 'DD/MM/YYYY',
+                format: 'DD/MM/YYYY HH:mm',
                 inline: false
                 //autoclose: true
             });
@@ -595,18 +595,13 @@
         });
 
         function DeleteDetails(index) {
-            
-            if (index != 0)
-            {
-                var Deleterow = index - 1;
-            }
-            var Deleterow = 0;
-            $('#tblItem').dataTable().fnDeleteRow(Deleterow);
+            debugger;
+            $('#tblItem').dataTable().fnDeleteRow(index);
             SummaryCalculation();
-            //var rowCount = 0;
-            //if ($('#tblItem').dataTable().fnSettings().aoData.length > 0) {
-            //    rowCount = $('#tblItem tr').length - 1;;
-            //}
+            var rowCount = 0;
+            if ($('#tblItem').dataTable().fnSettings().aoData.length > 0) {
+                rowCount = $('#tblItem tr').length - 1;;
+            }
         }
 
         function DeleteStockEntry() {
@@ -656,7 +651,6 @@
 
 
         function ConfirmSave() {
-            debugger;
             var rowCount = 0;
             if ($('#tblItem').dataTable().fnSettings().aoData.length > 0) {
                 rowCount = $('#tblItem tr').length - 1;;
@@ -1021,7 +1015,7 @@
                               NetAmount += Number($(value).val());
                               console.log('Data in index: ' + index + ' is: ' + NetAmount);
                           });
-                $("#txtNetAmount").val(NetAmount.toFixed(2));
+                $("#txtNetAmount").val(Math.round(NetAmount));
                 //var P = $('#txtPaidAmount').val();
                 //balance = NetAmount - P;
                 $('#txtBalanceAmount').val(NetAmount.toFixed(2));

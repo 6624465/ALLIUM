@@ -577,11 +577,7 @@ namespace NetStock.Areas.Operation.Controllers
                 orderheader = new NetStock.BusinessFactory.OrderHeaderBO().GetOrderHeader(new Contract.OrderHeader { OrderNo = orderNo });
                 if (orderheader != null)
                 {
-                    orderheader.OrderDetails.ForEach(dt =>
-
-                    { dt.Photo = new NetStock.BusinessFactory.ProductImageBO().GetProductImage(dt.ProductCode); }
-
-                        );
+                    orderheader.OrderDetails.ForEach(dt => { dt.Photo = new NetStock.BusinessFactory.ProductImageBO().GetProductImage(dt.ProductCode); });
 
                     foreach (var item in orderheader.OrderDetails)
                     {
@@ -640,20 +636,15 @@ namespace NetStock.Areas.Operation.Controllers
         [HttpPost]
         public ActionResult SaveOrderEntry(NetStock.Contract.OrderHeader order)
         {
-
             var message = string.Empty;
             var result = false;
             try
             {
-
-
                 order.Status = true;
                 order.CreatedBy = Session["DEFAULTUSER"].ToString();
                 order.ModifiedBy = Session["DEFAULTUSER"].ToString();
                 order.BranchID = Convert.ToInt16(Session["BranchId"]);
                 //order.IsPayLater = (bool)(order.PaymentDays > 0);
-
-
                 if (order.OrderNo == "NEW")
                 {
                     order.OrderNo = "";

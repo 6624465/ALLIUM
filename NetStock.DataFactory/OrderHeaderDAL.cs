@@ -161,7 +161,7 @@ namespace NetStock.DataFactory
                             });
                         }
 
-                        invoiceHeader.InvoiceNo = "";
+                        invoiceHeader.InvoiceNo = orderheader.OrderNo;
                         invoiceHeader.BranchID = orderheader.BranchID;
                         invoiceHeader.InvoiceType = orderheader.PaymentType ?? "CASH";
                         invoiceHeader.ApprovedBy = "";
@@ -234,12 +234,8 @@ namespace NetStock.DataFactory
                     transaction.Rollback();
 
             }
-            catch (Exception
-            
-            
-            )
+            catch (Exception ex)
             {
-
                 transaction.Rollback();
 
                 throw;
