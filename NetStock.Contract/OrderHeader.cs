@@ -137,6 +137,11 @@ namespace NetStock.Contract
         [DisplayName("UOM")]
         public string UOM { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:#,###,###.00}")]
+        [DisplayName("Transport Charges")]
+        public decimal TransportCharges { get; set; }
+
+
         public List<OrderDetail> OrderDetails { get; set; }
 
         public IEnumerable<SelectListItem> OrderTypeList { get; set; }

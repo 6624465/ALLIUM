@@ -203,13 +203,14 @@
                                     <th>SGST</th>
                                     <th>IGST</th>
                                     <th>Invoice</th>
-                                    @*<th>Selling Price</th>
-                                        <th>Dis. Type</th>
-                                        <th>Discount</th>*@
+                                    @*<th>selling price</th>*@
+                                        <th>Dis. type</th>
+                                        <th>Discount</th>
                                     @*<th>Adjust Amount</th>*@
                                     @*<th>Partial Pmt</th>*@
                                     @*<th>Total Amt </th>*@
                                     @*<th class="hidden">Record Status</th>*@
+                                    @*<th>Transport Charges</th>*@
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -220,84 +221,88 @@
                                     //{
                                     for (int itr = 0; itr < Model.OrderDetails.Count; itr++)
                                     {
-                                        <tr id="tr_@(itr+1)" data-id="@itr">
-                                            <td name="ProductCode" id="ProductCode_@itr">
-                                                @Html.HiddenFor(m => @Model.OrderDetails[itr].ProductCode)
-                                                @Model.OrderDetails[itr].ProductCode
-                                                @*@Html.HiddenFor(m => @Model.OrderDetails[itr].BarCode)
-                                                    @Html.HiddenFor(m => @Model.OrderDetails[itr].MatchQuotation)*@
-                                                @*@Html.HiddenFor(m => @Model.OrderDetails[itr].ProductDescription)*@
-                                                @*@Html.HiddenFor(m => @Model.OrderDetails[itr].ItemNo)*@
-                                            </td>
-                                            <td name="ProductDescription" id="ProductDescription_@itr">
-                                                @Html.HiddenFor(m => @Model.OrderDetails[itr].ProductDescription)
-                                                @Model.OrderDetails[itr].ProductDescription
-                                            </td>
-                                            @*<td name="Location" id="Location_@itr" class="hidden">
-                                                    @Html.HiddenFor(m => @Model.OrderDetails[itr].Location)
-                                                    @Model.OrderDetails[itr].LocationDescription
-                                                </td>*@
-                                            <td name="Cost" id="Cost_@itr">
-                                                @Html.HiddenFor(m => @Model.OrderDetails[itr].Cost)
-                                                @Model.OrderDetails[itr].Cost.ToString("###,###.00")
-                                            </td>
-                                            @*<td name="SellRate" id="SellRate_@itr">
-                                                    @Html.HiddenFor(m => @Model.OrderDetails[itr].SellRate)
-                                                    @Model.OrderDetails[itr].SellRate.ToString("###,###.00")
-                                                </td>*@
-                                            <td name="Quantity" id="Quantity_@itr">
-                                                @Html.HiddenFor(m => @Model.OrderDetails[itr].Quantity)
-                                                @Model.OrderDetails[itr].Quantity.ToString("###")
-                                            </td>
-                                            <td name="BasePrice" id="BasePrice@itr">
-                                                @Html.HiddenFor(m => @Model.OrderDetails[itr].BasePrice)
-                                                @Model.OrderDetails[itr].BasePrice.ToString("###")
-                                            </td>
-                                            <td name="CGST" id="CGST@itr">
-                                                @Html.HiddenFor(m => @Model.OrderDetails[itr].CGST)
-                                                @Model.OrderDetails[itr].CGST.ToString("###")
-                                            </td>
-                                            <td name="SGST" id="SGST@itr">
-                                                @Html.HiddenFor(m => @Model.OrderDetails[itr].SGST)
-                                                @Model.OrderDetails[itr].SGST.ToString("###")
-                                            </td>
-                                            <td name="IGST" id="IGST@itr">
-                                                @Html.HiddenFor(m => @Model.OrderDetails[itr].IGST)
-                                                @Model.OrderDetails[itr].IGST.ToString("###")
-                                            </td>
-                                            <td name="InvoiceAmount" id="InvoiceAmount_@itr">
-                                                @Html.HiddenFor(m => @Model.OrderDetails[itr].InvoiceAmount)
-                                                @Model.OrderDetails[itr].InvoiceAmount.ToString("###,###.00")
-                                            </td>
-                                            @*<td name="SellPrice" id="SellPrice_@itr">
-                                                    @Html.HiddenFor(m => @Model.OrderDetails[itr].SellPrice)
-                                                    @Model.OrderDetails[itr].SellPrice.ToString("###,###.00")
-                                                </td>*@
-                                            @*<td name="DiscountType" id="DiscountType_@itr">
-                                                    @Html.DropDownListFor(m => @Model.OrderDetails[itr].DiscountType, new SelectList(Model.DiscountTypeList, "Value", "Text", Model.OrderDetails[itr].DiscountType), null, new { @class = "form-control input-sm", id = "OrderDetails_" + itr + "DiscountType" })
-                                                </td>
-                                                <td name="DiscountAmount" id="DiscountAmount_@itr">
-                                                    @Html.TextBoxFor(m => @Model.OrderDetails[itr].DiscountAmount, new { @Value = @Model.OrderDetails[itr].DiscountAmount.ToString("###,##0.00"), @class = "form-control input-sm", id = "OrderDetails_" + itr + "DiscountAmount", onchange = "DiscountAmount_Changed(this,'" + Model.OrderDetails[itr].SellPrice + "','OrderDetails_" + itr + "DiscountType','OrderDetails_" + itr + "SellPrice',0)", data_index = "" + itr + "", data_distype = "" + Model.OrderDetails[itr].DiscountType + "", data_sp = "" + Model.OrderDetails[itr].SellPrice + "" })
-                                                </td>
-                                                <td name="PartialPayment" id="PartialPayment_@itr">
-                                                    @Html.TextBoxFor(m => @Model.OrderDetails[itr].PartialPayment, new { @class = "form-control input-sm partialPaymentCss_" + itr, id = "OrderDetails_" + itr + "PartialPayment", onchange = "PartialPayment_Changed();" })
-                                                </td>*@
-                                            @*<td name="SellPrice" id="SellPrice_@itr">
-                                                    @Html.HiddenFor(m => @Model.OrderDetails[itr].SellPrice)
-                                                    @Model.OrderDetails[itr].SellPrice.ToString("###,##0.00")
-                                                </td>*@
-                                            @*<td>@Html.HiddenFor(m => @item.OrderNo)</td>*@
-                                            @*<td class="hidden" name="RecordStatus" id="RecordStatus_@itr">
-                                                    @Model.OrderDetails[itr].RecordStatus
-                                                </td>*@
-                                            <td name="Action">
-                                                @*<img class="img-class" src="~/Images/fa-trash-o_22.png" onclick="DeleteDetails(this,'chk_@itr','RecordStatus_@itr','@itr')" />*@
-                                                @if (HtmlHelpers.hasRight("SalesEntry(ForeCast)Delete"))
-                                                {
-                                                    <button type="button" class="btn btn-default btn-sm" onclick="DeleteDetails('@(itr)')"><i class="fa fa-trash" aria-hidden="true"></i></button>
-                                                }
-                                            </td>
-                                        </tr>
+                                <tr id="tr_@(itr+1)" data-id="@itr">
+                                    <td name="ProductCode" id="ProductCode_@itr">
+                                        @Html.HiddenFor(m => @Model.OrderDetails[itr].ProductCode)
+                                        @Model.OrderDetails[itr].ProductCode
+                                        @*@Html.HiddenFor(m => @Model.OrderDetails[itr].BarCode)
+            @Html.HiddenFor(m => @Model.OrderDetails[itr].MatchQuotation)*@
+                                        @*@Html.HiddenFor(m => @Model.OrderDetails[itr].ProductDescription)*@
+                                        @*@Html.HiddenFor(m => @Model.OrderDetails[itr].ItemNo)*@
+                                    </td>
+                                    <td name="ProductDescription" id="ProductDescription_@itr">
+                                        @Html.HiddenFor(m => @Model.OrderDetails[itr].ProductDescription)
+                                        @Model.OrderDetails[itr].ProductDescription
+                                    </td>
+                                    @*<td name="Location" id="Location_@itr" class="hidden">
+            @Html.HiddenFor(m => @Model.OrderDetails[itr].Location)
+            @Model.OrderDetails[itr].LocationDescription
+        </td>*@
+                                    <td name="Cost" id="Cost_@itr">
+                                        @Html.HiddenFor(m => @Model.OrderDetails[itr].Cost)
+                                        @Model.OrderDetails[itr].Cost.ToString("###,###.00")
+                                    </td>
+                                    @*<td name="SellRate" id="SellRate_@itr">
+            @Html.HiddenFor(m => @Model.OrderDetails[itr].SellRate)
+            @Model.OrderDetails[itr].SellRate.ToString("###,###.00")
+        </td>*@
+                                    <td name="Quantity" id="Quantity_@itr">
+                                        @Html.HiddenFor(m => @Model.OrderDetails[itr].Quantity)
+                                        @Model.OrderDetails[itr].Quantity.ToString("###")
+                                    </td>
+                                    <td name="BasePrice" id="BasePrice@itr">
+                                        @Html.HiddenFor(m => @Model.OrderDetails[itr].BasePrice)
+                                        @Model.OrderDetails[itr].BasePrice.ToString("###")
+                                    </td>
+                                    <td name="CGST" id="CGST@itr">
+                                        @Html.HiddenFor(m => @Model.OrderDetails[itr].CGST)
+                                        @Model.OrderDetails[itr].CGST.ToString("###")
+                                    </td>
+                                    <td name="SGST" id="SGST@itr">
+                                        @Html.HiddenFor(m => @Model.OrderDetails[itr].SGST)
+                                        @Model.OrderDetails[itr].SGST.ToString("###")
+                                    </td>
+                                    <td name="IGST" id="IGST@itr">
+                                        @Html.HiddenFor(m => @Model.OrderDetails[itr].IGST)
+                                        @Model.OrderDetails[itr].IGST.ToString("###")
+                                    </td>
+                                    <td name="InvoiceAmount" id="InvoiceAmount_@itr">
+                                        @Html.HiddenFor(m => @Model.OrderDetails[itr].InvoiceAmount)
+                                        @Model.OrderDetails[itr].InvoiceAmount.ToString("###,###.00")
+                                    </td>
+                                    @*<td name="SellPrice" id="SellPrice_@itr">
+            @Html.HiddenFor(m => @Model.OrderDetails[itr].SellPrice)
+            @Model.OrderDetails[itr].SellPrice.ToString("###,###.00")
+        </td>*@
+                                    <td name="DiscountType" id="DiscountType_@itr">
+                                        @Html.DropDownListFor(m => @Model.OrderDetails[itr].DiscountType, new SelectList(Model.DiscountTypeList, "Value", "Text", Model.OrderDetails[itr].DiscountType), null, new { @class = "form-control input-sm", id = "OrderDetails_" + itr + "DiscountType", onchange = "cmbDiscountType_Chnage(this,'" + Model.OrderDetails[itr].InvoiceAmount + "','OrderDetails_" + itr + "DiscountAmount','OrderDetails_" + itr + "InvoiceAmount',  '"+itr+"')", data_index = "" + itr + "", data_sp = "" + Model.OrderDetails[itr].InvoiceAmount + "" })
+                                    </td>
+                                    <td name="DiscountAmount" id="DiscountAmount_@itr">
+                                        @Html.TextBoxFor(m => @Model.OrderDetails[itr].DiscountAmount, new { @Value = @Model.OrderDetails[itr].DiscountAmount.ToString("###,##0.00"), @class = "form-control input-sm", id = "OrderDetails_" + itr + "DiscountAmount", onchange = "DiscountAmount_Changed(this,'" + Model.OrderDetails[itr].InvoiceAmount + "','OrderDetails_" + itr + "DiscountType','OrderDetails_" + itr + "InvoiceAmount','" + itr + "')", data_index = "" + itr + "", data_distype = "" + Model.OrderDetails[itr].DiscountType + "", data_sp = "" + Model.OrderDetails[itr].InvoiceAmount + "" })
+                                    </td>
+                                    @*<td name="PartialPayment" id="PartialPayment_@itr">
+            @Html.TextBoxFor(m => @Model.OrderDetails[itr].PartialPayment, new { @class = "form-control input-sm partialPaymentCss_" + itr, id = "OrderDetails_" + itr + "PartialPayment", onchange = "PartialPayment_Changed();" })
+        </td>*@
+                                    @*<td name="SellPrice" id="SellPrice_@itr">
+            @Html.HiddenFor(m => @Model.OrderDetails[itr].SellPrice)
+            @Model.OrderDetails[itr].SellPrice.ToString("###,##0.00")
+        </td>*@
+                                    @*<td>@Html.HiddenFor(m => @item.OrderNo)</td>*@
+                                    @*<td class="hidden" name="RecordStatus" id="RecordStatus_@itr">
+            @Model.OrderDetails[itr].RecordStatus
+        </td>*@
+
+                                    @*<td name="Transportchrgs" id="Transportchrgs_@itr">
+                                        @Html.TextBoxFor(m => @Model.OrderDetails[itr].DiscountAmount, new { @Value = @Model.OrderDetails[itr].DiscountAmount.ToString("###,##0.00"), @class = "form-control input-sm", id = "OrderDetails_" + itr + "Transportchrgs", onchange = "Transportchrgs_Changed(this)", data_index = "" + itr + "", data_distype = "" + Model.OrderDetails[itr].DiscountType + "", data_sp = "" + Model.OrderDetails[itr].SellPrice + "" })
+                                    </td>*@
+                                    <td name="Action">
+                                        @*<img class="img-class" src="~/Images/fa-trash-o_22.png" onclick="DeleteDetails(this,'chk_@itr','RecordStatus_@itr','@itr')" />*@
+                                        @if (HtmlHelpers.hasRight("SalesEntry(ForeCast)Delete"))
+        {
+                                <button type="button" class="btn btn-default btn-sm" onclick="DeleteDetails('@(itr)')"><i class="fa fa-trash" aria-hidden="true"></i></button>
+}
+                                    </td>
+                                </tr>
                                     }
                                 }
                             </tbody>
@@ -321,18 +326,18 @@
                 </div>
             </div>
 
-            @*<div class="row">
-                    <div class="pull-right col-md-4">
-                        <div class="form-group">
-                            <div>
-                                <label for="txtInvoiceNo" class="col-md-8 control-label input-sm">Discount Amt</label>
-                                <div class="col-md-4">
-                                    @Html.TextBoxFor(m => m.DiscountAmount, new { @Value = Model.DiscountAmount.ToString("###,##0.00"), @class = "form-control input-sm-red", @id = "txtDiscountAmount", @readonly = "true" })
-                                </div>
+            <div class="row">
+                <div class="pull-right col-md-4">
+                    <div class="form-group">
+                        <div>
+                            <label for="txtInvoiceNo" class="col-md-8 control-label input-sm">Discount Amt</label>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(m => m.DiscountAmount, new { @Value = Model.DiscountAmount.ToString("###,##0.00"), @class = "form-control input-sm-red", @id = "txtDiscountAmount", @readonly = "true" })
                             </div>
                         </div>
                     </div>
-                </div>*@
+                </div>
+            </div>
             <div class="row">
                 <div class="pull-right col-xs-4">
                     <div class="form-group">
@@ -341,8 +346,8 @@
                             <div class="col-md-4">
                                 @*<div class="input-group">*@
                                 @*<span class="input-group-addon">
-                                        @Html.CheckBoxFor(m => m.IsVAT, new { @class = "checkbox", @id = "chkVAT" })
-                                    </span>*@
+                                @Html.CheckBoxFor(m => m.IsVAT, new { @class = "checkbox", @id = "chkVAT" })
+                            </span>*@
                                 @Html.TextBoxFor(m => m.CGST, new { @Value = Model.CGST.ToString("###,##0.00"), @class = "form-control input-sm-red", @id = "txtCGST", @readonly = "true" })
                                 @*</div>*@
 
@@ -377,24 +382,42 @@
                 </div>
             </div>
             @*<div class="row">
-                    <div class="pull-right col-xs-4">
-                        <div class="form-group">
+            <div class="pull-right col-xs-4">
+                <div class="form-group">
 
-                            <div>
-                                <label for="txtInvoiceNo" class="col-md-4 control-label input-sm">W/H Tax %</label>
-                                <div class="pull-right col-sm-4">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            @Html.CheckBoxFor(m => m.IsWHTax, new { @class = "checkbox", @id = "chkWH" })
-                                        </span>
-                                        @Html.TextBoxFor(m => m.WithHoldingAmount, new { @Value = Model.WithHoldingAmount.ToString("###,##0.00"), @class = "form-control input-sm-red", @id = "txtWithHoldingAmount", @readonly = "true" })
-                                    </div>
-
-                                </div>
+                    <div>
+                        <label for="txtInvoiceNo" class="col-md-4 control-label input-sm">W/H Tax %</label>
+                        <div class="pull-right col-sm-4">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    @Html.CheckBoxFor(m => m.IsWHTax, new { @class = "checkbox", @id = "chkWH" })
+                                </span>
+                                @Html.TextBoxFor(m => m.WithHoldingAmount, new { @Value = Model.WithHoldingAmount.ToString("###,##0.00"), @class = "form-control input-sm-red", @id = "txtWithHoldingAmount", @readonly = "true" })
                             </div>
+
                         </div>
                     </div>
-                </div>*@
+                </div>
+            </div>
+        </div>*@
+
+
+            <div class="row">
+                <div class="pull-right col-xs-4">
+                    <div class="form-group">
+
+                        <div>
+                            <label for="txtInvoiceNo" class="col-md-4 control-label input-sm">Transport Charges</label>
+                            <div class="pull-right col-sm-4">
+                                @Html.TextBoxFor(m => m.TransportCharges, new { @Value = Model.TransportCharges.ToString("###,##0"), @class = "form-control input-sm-red", @id = "txttransportcharges", @align = "right" ,onblur="calculatetransportcharges()"})
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
             <div class="row">
                 <div class="pull-right col-xs-4">
                     <div class="form-group">
@@ -411,33 +434,33 @@
             </div>
 
             @*<div class="row">
-                <div class="pull-right col-md-4">
-                    <div class="form-group">
+            <div class="pull-right col-md-4">
+                <div class="form-group">
 
-                        <div>
-                            <label for="txtInvoiceNo" class="col-md-8 control-label input-sm">Paid Amount</label>
-                            <div class="col-md-4">
-                                @Html.TextBoxFor(m => m.PaidAmount, new { @class = "form-control input-sm-green", @id = "txtPaidAmount" })
-                            </div>
-
+                    <div>
+                        <label for="txtInvoiceNo" class="col-md-8 control-label input-sm">Paid Amount</label>
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(m => m.PaidAmount, new { @class = "form-control input-sm-green", @id = "txtPaidAmount" })
                         </div>
+
                     </div>
                 </div>
-            </div>*@
+            </div>
+        </div>*@
             @*<div class="row">
-                <div class="pull-right col-md-4">
-                    <div class="form-group">
+            <div class="pull-right col-md-4">
+                <div class="form-group">
 
-                        <div>
-                            <label for="txtInvoiceNo" class="col-md-8 control-label input-sm">Balance Amt</label>
-                            <div class="col-md-4">
-                                @Html.TextBoxFor(m => m.BalanceAmount, new { @class = "form-control input-sm-green", @id = "txtBalanceAmount", @readonly = "true" })
-                            </div>
-
+                    <div>
+                        <label for="txtInvoiceNo" class="col-md-8 control-label input-sm">Balance Amt</label>
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(m => m.BalanceAmount, new { @class = "form-control input-sm-green", @id = "txtBalanceAmount", @readonly = "true" })
                         </div>
+
                     </div>
                 </div>
-            </div>*@
+            </div>
+        </div>*@
         </div>
 
         @if (HtmlHelpers.hasRight("SalesEntry(ForeCast)Save"))
@@ -753,7 +776,7 @@
             });
         }
         function Products_OnChange(el) {
-
+            debugger;
             var productCode = el.value;
             var rooturl = "@Url.Action("ProductCodeToUOM", "Operation", new { area = "Operation" })"
             var urls = rooturl + "?productCode=" + productCode;
@@ -765,8 +788,10 @@
 
         }
         function AddItemstoTable() {
+            debugger;
             var productCode = $('#Products').val();
             if ($('#myForm').valid()) {
+                debugger;
                 var textValue = productCode;
                 var customerCode = $("#ddlCustomerCode").val();
                 var Qty = $("#txtReceiveQty").val();
@@ -775,7 +800,7 @@
                     var totalQty = 0;
                     $('#tblItem').DataTable().rows().every(function (rowIdx, tableLoop, rowLoop) {
                         var data = this.data();
-
+                        debugger;
                         try {
                             if ($(data[2].trim()).val() == textValue || data[2].trim() == textValue) {
 
@@ -803,7 +828,7 @@
 
                     //"EditOrderItem", "Operation", new { area = "Operation" }
                     $.post(url, null, function (data) {
-
+                        debugger;
                         if (data.Message != "Success") {
                             alert(data.Message);
                             return false;
@@ -828,13 +853,15 @@
      //, "<input id='OrderDetails[" + rowCount + "].SellRate' type='hidden' value=" + data.OrderDetail.SellRate + " name='OrderDetails[" + rowCount + "].SellRate'>" + data.OrderDetail.SellRate
      //, "<input id='OrderDetails[" + rowCount + "].SellPrice' type='hidden' value=" + data.OrderDetail.SellPrice + " name='OrderDetails[" + rowCount + "].SellPrice'>" + data.OrderDetail.SellPrice
     //, "<input id='OrderDetails[" + rowCount + "].CurrencyCode' type='hidden' value=" + data.OrderDetail.Quantity + " name='OrderDetails[" + rowCount + "].CurrencyCode'>" +
-    //    "<select name='OrderDetails[" + rowCount + "].DiscountType' class='form-control input-sm' id='OrderDetails_" + rowCount + "DiscountType' onchange='cmbDiscountType_Chnage(this," + data.OrderDetail.SellPrice + ",\"OrderDetails_" + rowCount + "DiscountAmount\", \"OrderDetails_" + rowCount + "SellPrice\"," + rowCount + ")' ><option value='NONE'>NONE</option><option value='AMOUNT'>AMOUNT</option><option value='PERCENTAGE'>PERCENTAGE</option></select>"
-     // , "<input data-a-sep='' data-a-dec='.' data-a-sign='' class='NumberAutonumeric form-control input-sm'  id='OrderDetails_" + rowCount + "DiscountAmount' data-index='" + rowCount + "' data-distype='OrderDetails_" + rowCount + "DiscountType' data-sp='" + data.OrderDetail.SellPrice + "' type='text' value="+ data.OrderDetail.DiscountAmount + " onchange='DiscountAmount_Changed(this," + data.OrderDetail.SellPrice + ",  \"OrderDetails_" + rowCount + "DiscountType\"  ,  \"OrderDetails_" + rowCount + "SellPrice\"," + rowCount + ")' name='OrderDetails[" + rowCount + "].DiscountAmount'>"
+                            , "<select name='OrderDetails[" + rowCount + "].DiscountType' class='form-control input-sm' id='OrderDetails_" + rowCount + "DiscountType' onchange='cmbDiscountType_Chnage(this," + data.OrderDetail.InvoiceAmount + ",\"OrderDetails_" + rowCount + "DiscountAmount\", \"OrderDetails_" + rowCount + "InvoiceAmount\"," + rowCount + ")' ><option value='NONE'>NONE</option><option value='AMOUNT'>AMOUNT</option><option value='PERCENTAGE'>PERCENTAGE</option></select>"
+                            , "<input data-a-sep='' data-a-dec='.' data-a-sign='' class='NumberAutonumeric form-control input-sm'  id='OrderDetails_" + rowCount + "DiscountAmount' data-index='" + rowCount + "' data-distype='OrderDetails_" + rowCount + "DiscountType' data-sp='" + data.OrderDetail.InvoiceAmount + "' type='text' value=" + data.OrderDetail.DiscountAmount + " onchange='DiscountAmount_Changed(this," + data.OrderDetail.InvoiceAmount + ",  \"OrderDetails_" + rowCount + "DiscountType\"  ,  \"OrderDetails_" + rowCount + "InvoiceAmount\"," + rowCount + ")' name='OrderDetails[" + rowCount + "].DiscountAmount'>"
      // , "<input class='form-control input-sm partialPaymentCss_" + rowCount + "' id='OrderDetails_" + rowCount + "PartialPayment' type='text' onchange='PartialPayment_Changed()' value=" + data.OrderDetail.SellPrice + " name='OrderDetails[" + rowCount + "].PartialPayment'>"
      //, "<input data-a-sep='' data-a-dec='.' data-a-sign='' class='NumberAutonumeric form-control input-sm' id='OrderDetails_" + rowCount + "SellPrice' type='text'  value=" + totalamt + " name='OrderDetails[" + rowCount + "].SellPrice' style='border:none' readonly='readonly'>"
      //, "<input id='OrderDetails[" + rowCount + "].RecordStatus' type='hidden' value='1' name='OrderDetails[" + rowCount + "].RecordStatus'>"
      //'<img class="img-class" src="../Images/fa-trash-o_22.png" onclick="DeleteItemDetails(this,' + "'chk_" + rowCount + "'" + ',' + "'RecordStatus_" + rowCount + "'" + ',' + rowCount + ')" />'
-    , '<button type="button" class="btn btn-default btn-sm" onclick="DeleteDetails(' + rowCount + ')"><i class="fa fa-trash" aria-hidden="true"></i></button>'
+                            //, "<input class='form-control input-sm' id='OrderDetails[" + rowCount + "].Transportchrgs' name='OrderDetails[" + rowCount + "].Transportchrgs onchange='Transportchrgs_Changed(this)''>"
+
+                            , '<button type="button" class="btn btn-default btn-sm" onclick="DeleteDetails(' + rowCount + ')"><i class="fa fa-trash" aria-hidden="true"></i></button>'
                         ];
                         $('#tblItem').dataTable().fnAddData(rowData);
 
@@ -970,8 +997,19 @@
             }
         });*/
 
+        function calculatetransportcharges(item) {
+            debugger;
+            var netamount = parseFloat($('#txtNetAmount').val().replace(',',''));
+            var transportchargesamount = parseFloat($('#txttransportcharges').val().replace(',', ''))
+
+            var balanceamount = (isNaN(netamount) ? 0 : netamount) + (isNaN(transportchargesamount) ? 0 : transportchargesamount);
+            $('#txtNetAmount').val(balanceamount);
+        }
+
+
+
         function SummaryCalculation() {
-            
+            debugger;
             var table = $('#tblItem').DataTable();
             var totalAmount = 0;
             var CGSTAmount = 0;
@@ -979,6 +1017,10 @@
             var IGSTAmount = 0;
             var NetAmount = 0;
             var balance = 0;
+            var DisType = "";
+            var DisAmount = 0;
+            var totalpartialAmt = 0;
+            var totaldiscAmt = 0;
             //var x = $("#tr_" + index).hasClass("my-class");
                 table.column(4).data()
                     .each(function (value, index) {
@@ -1015,10 +1057,70 @@
                               NetAmount += Number($(value).val());
                               console.log('Data in index: ' + index + ' is: ' + NetAmount);
                           });
-                $("#txtNetAmount").val(Math.round(NetAmount));
+            $("#txtTotalAmount").val(Math.round(NetAmount));
+
+
+
+
+
+            table.column(10).data()
+                .each(function (value, index) {
+                    debugger;
+                    var controlid = "#" + $(value).attr("id");
+                    //var disTypeCntrlID = $(controlid).data('distype');
+
+                    var disTypeCntrlID=  $("#OrderDetails_" + index + "DiscountType").val();
+                    var index = $(controlid).data('index');
+                    var SellingPriceVal = $(controlid).data('sp');//$('.partialPaymentCss_' + index).val();
+
+                    var discountAmt = Number($(controlid).val());
+
+                    var selectedDisType = $('#' + disTypeCntrlID).val();
+                    var selectedDisTypeVal = selectedDisType == undefined ? disTypeCntrlID : selectedDisType
+
+                    //var selectedDisTypeVal =  disTypeCntrlID
+                    if (selectedDisTypeVal == 'PERCENTAGE') {
+                        totaldiscAmt += ((SellingPriceVal * Number($(controlid).val())) / 100)
+                    } else if (selectedDisTypeVal == 'AMOUNT') {
+                        totaldiscAmt += Number($(controlid).val());
+                    } else if (selectedDisTypeVal == 'NONE') {
+                        totaldiscAmt += 0;
+                    }
+
+            });
+
+            //table.column(10).data()
+            //    .each(function (value, index) {
+            //        //totalpartialAmt += Number($(value).val());
+            //        totalpartialAmt += Number($('.partialPaymentCss_' + index).val());
+            //    });
+
+            $("#txtTotalAmount").val(totalAmount.toFixed(2));
+            //$("#txtDiscountAmount").val(totaldiscAmt.toFixed(2));
+            debugger;   
+            $("#txtDiscountAmount").val(totaldiscAmt.toFixed(2));
+            var transportamt = isNaN(parseFloat($("#txttransportcharges").val().replace(',', ''))) ? 0 : parseFloat($("#txttransportcharges").val().replace(',', ''));
+
+            var BalanceAmount = (totalAmount + CGSTAmount + SGSTAmount + IGSTAmount + transportamt) - totaldiscAmt
+           // var BalanceAmount = totalAmount - totaldiscAmt
+            $("#txtNetAmount").val(BalanceAmount.toFixed(2));
+
+            //table.column(9).data()
+            //    .each(function (value, index) {
+            //        DisType += Number($(value).val());
+            //        console.log('Data in index: ' + index + ' is: ' + DisType);
+            //    });
+           
+            //table.column(10).data()
+            //    .each(function (value, index) {
+            //        DisAmount += Number($(value).val());
+            //        console.log('Data in index: ' + index + ' is: ' + DisAmount);
+            //    });
+
+
                 //var P = $('#txtPaidAmount').val();
                 //balance = NetAmount - P;
-                $('#txtBalanceAmount').val(NetAmount.toFixed(2));
+                //$('#txtBalanceAmount').val(NetAmount.toFixed(2));
             }
         //   sessionStorage.removeItem("index");
             //var b = $("#txtBalanceAmount").val();
@@ -1172,32 +1274,34 @@
         //    $("#txtBalanceAmount").val(BalanceAmount.toFixed(2));
         //}
 
-        //function cmbDiscountType_Chnage(t, SELLINGPRICE, DISCOUNTAMOUNTID, id, rowCount) {
-        //    //
-        //    var DISCOUNTTYPE = $(t).val();
-        //    id = "#" + id;
+        function cmbDiscountType_Chnage(t, SELLINGPRICE, DISCOUNTAMOUNTID, id, rowCount) {
+            debugger;
+            
+            var DISCOUNTTYPE = $(t).val();
+            id = "#" + id;
 
-        //    DISCOUNTAMOUNTID = "#" + DISCOUNTAMOUNTID;
+            DISCOUNTAMOUNTID = "#" + DISCOUNTAMOUNTID;
 
-        //    var DISCOUNTAMOUNT = $(DISCOUNTAMOUNTID).val();
+            var DISCOUNTAMOUNT = $(DISCOUNTAMOUNTID).val();
 
 
-        //    TotalCalculation(DISCOUNTTYPE, SELLINGPRICE, DISCOUNTAMOUNT, id, rowCount);
-        //    SummaryCalculation();
-        //}
+            TotalCalculation(DISCOUNTTYPE, SELLINGPRICE, DISCOUNTAMOUNT, id, rowCount);
+            SummaryCalculation();
+        }
 
-        //function DiscountAmount_Changed(_this, SELLINGPRICE, DiscountTypeId, id, rowCount) {
+        function DiscountAmount_Changed(_this, SELLINGPRICE, DiscountTypeId, id, rowCount) {
+            debugger;
+           
+            var DiscountAmount = $(_this).val();
+            DiscountTypeId = "#" + DiscountTypeId;
+            var DISCOUNTTYPE = $(DiscountTypeId).val();
+            id = "#" + id;
 
-        //    var DiscountAmount = $(_this).val();
-        //    DiscountTypeId = "#" + DiscountTypeId;
-        //    var DISCOUNTTYPE = $(DiscountTypeId).val();
-        //    id = "#" + id;
-
-        //    $(DiscountTypeId).attr('readonly', 'readonly');
-        //    $(_this).attr('readonly', 'readonly');
-        //    TotalCalculation(DISCOUNTTYPE, SELLINGPRICE, DiscountAmount, id, rowCount);
-        //    SummaryCalculation();
-        //}
+            $(DiscountTypeId).attr('readonly', 'readonly');
+            $(_this).attr('readonly', 'readonly');
+            TotalCalculation(DISCOUNTTYPE, SELLINGPRICE, DiscountAmount, id, rowCount);
+            SummaryCalculation();
+        }
 
         //function AdjustAmount_Changed(_this, SELLINGPRICE, DiscountAmountId, DiscountTypeId, id, rowCount) {
 
@@ -1215,32 +1319,32 @@
         //     SummaryCalculation();
         // }
 
-        //function TotalCalculation(DISCOUNTTYPE, SELLINGPRICE, DISCOUNTAMOUNT, id, rowCount) {
+        function TotalCalculation(DISCOUNTTYPE, SELLINGPRICE, DISCOUNTAMOUNT, id, rowCount) {
+            debugger;
+            //var DISCOUNTTYPE = $(t).val();
+            //id = "#" + id;
+            console.log(DISCOUNTTYPE + "," + SELLINGPRICE + "," + DISCOUNTAMOUNT)
+            var TOTALAMOUNT = 0;
+            if (DISCOUNTTYPE == "AMOUNT") {
+                TOTALAMOUNT = SELLINGPRICE - DISCOUNTAMOUNT
+            }
+            else if (DISCOUNTTYPE == "PERCENTAGE") {
 
-        //    //var DISCOUNTTYPE = $(t).val();
-        //    //id = "#" + id;
-        //    console.log(DISCOUNTTYPE + "," + SELLINGPRICE + "," + DISCOUNTAMOUNT)
-        //    var TOTALAMOUNT = 0;
-        //    if (DISCOUNTTYPE == "AMOUNT") {
-        //        TOTALAMOUNT = SELLINGPRICE - DISCOUNTAMOUNT
-        //    }
-        //    else if (DISCOUNTTYPE == "PERCENTAGE") {
+                TOTALAMOUNT = SELLINGPRICE - ((SELLINGPRICE * DISCOUNTAMOUNT) / 100)
+            }
+            else if (DISCOUNTTYPE == "NONE") {
+                TOTALAMOUNT = SELLINGPRICE
+            }
 
-        //        TOTALAMOUNT = SELLINGPRICE - ((SELLINGPRICE * DISCOUNTAMOUNT) / 100)
-        //    }
-        //    else if (DISCOUNTTYPE == "NONE") {
-        //        TOTALAMOUNT = SELLINGPRICE
-        //    }
+            //$(id).val(TOTALAMOUNT);
+           // $(id).attr("value", TOTALAMOUNT);
+            //
+            var oTable = $('#tblItem').dataTable();
+            //oTable.fnUpdate("<input data-a-sep='' data-a-dec='.' data-a-sign='' class='NumberAutonumeric form-control input-sm' id='OrderDetails_" + rowCount + "SellPrice' type='text'  value=" + TOTALAMOUNT + " name='OrderDetails[" + rowCount + "].SellPrice' style='border:none' readonly='readonly'>", rowCount, 10);
+            //oTable.fnUpdate("<input data-a-sep='' data-a-dec='.' data-a-sign='' onchange='PartialPayment_Changed()' class='NumberAutonumeric form-control input-sm partialPaymentCss_" + rowCount + "'  id='OrderDetails_" + rowCount + "PartialPayment' type='text' value=" + TOTALAMOUNT + " name='OrderDetails[" + rowCount + "].PartialPayment'>", rowCount, 9);
 
-        //    //$(id).val(TOTALAMOUNT);
-        //    //$(id).attr("value", TOTALAMOUNT);
-        //    //
-        //    var oTable = $('#tblItem').dataTable();
-        //    //oTable.fnUpdate("<input data-a-sep='' data-a-dec='.' data-a-sign='' class='NumberAutonumeric form-control input-sm' id='OrderDetails_" + rowCount + "SellPrice' type='text'  value=" + TOTALAMOUNT + " name='OrderDetails[" + rowCount + "].SellPrice' style='border:none' readonly='readonly'>", rowCount, 10);
-        //    oTable.fnUpdate("<input data-a-sep='' data-a-dec='.' data-a-sign='' onchange='PartialPayment_Changed()' class='NumberAutonumeric form-control input-sm partialPaymentCss_" + rowCount + "'  id='OrderDetails_" + rowCount + "PartialPayment' type='text' value=" + TOTALAMOUNT + " name='OrderDetails[" + rowCount + "].PartialPayment'>", rowCount, 9);
-
-        //    //"<input data-a-sep='' data-a-dec='.' data-a-sign='' class='NumberAutonumeric'  id='OrderDetails_" + rowCount + "PartialPayment' type='text' value=" + TOTALAMOUNT + " name='OrderDetails[" + rowCount + "].PartialPayment'>"
-        //}
+            //"<input data-a-sep='' data-a-dec='.' data-a-sign='' class='NumberAutonumeric'  id='OrderDetails_" + rowCount + "PartialPayment' type='text' value=" + TOTALAMOUNT + " name='OrderDetails[" + rowCount + "].PartialPayment'>"
+        }
 
 
 

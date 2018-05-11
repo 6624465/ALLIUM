@@ -108,7 +108,7 @@ namespace NetStock.DataFactory
                     transaction.Commit();
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 if (currentTransaction == null)
                     transaction.Rollback();
@@ -155,7 +155,7 @@ namespace NetStock.DataFactory
 
                 result = Convert.ToBoolean(db.ExecuteNonQuery(deleteCommand, transaction));
 
-                if(currentTransaction==null)
+                //if(currentTransaction==null)
                     transaction.Commit();
 
             }

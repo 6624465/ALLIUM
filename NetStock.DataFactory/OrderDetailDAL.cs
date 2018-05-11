@@ -124,7 +124,7 @@ namespace NetStock.DataFactory
                     transaction.Commit();
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 if (currentTransaction == null)
                     transaction.Rollback();

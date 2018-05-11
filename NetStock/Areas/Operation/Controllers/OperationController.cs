@@ -592,7 +592,8 @@ namespace NetStock.Areas.Operation.Controllers
                         }
                         else if (item.DiscountType == "PERCENTAGE")
                         {
-                            Discount += (item.SellPrice * item.DiscountAmount) / 100;
+                            // Discount += (item.SellPrice * item.DiscountAmount) / 100;
+                            Discount += (item.InvoiceAmount * item.DiscountAmount) / 100;
                         }
                     }
                 }
@@ -607,8 +608,8 @@ namespace NetStock.Areas.Operation.Controllers
                 }
 
             }
-
             orderheader.DiscountAmount = Discount;
+            //orderheader.DiscountAmount = orderheader.TotalAmount-orderheader.NetAmount;
             orderheader.DiscountTypeList = Utility.GetDiscountList();
             orderheader.CustomersList = NetStock.Utility.GetCustomerList(false);
             //orderheader.ContactList = NetStock.Utility.GetContactPersonList();
@@ -640,6 +641,7 @@ namespace NetStock.Areas.Operation.Controllers
             var result = false;
             try
             {
+               
                 order.Status = true;
                 order.CreatedBy = Session["DEFAULTUSER"].ToString();
                 order.ModifiedBy = Session["DEFAULTUSER"].ToString();

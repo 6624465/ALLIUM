@@ -113,6 +113,7 @@ namespace NetStock.DataFactory
                 db.AddInParameter(savecommand, "ModifiedBy", System.Data.DbType.String, orderheader.ModifiedBy);
                 db.AddInParameter(savecommand, "Remarks", System.Data.DbType.String, orderheader.Remarks == null ? "" : orderheader.Remarks);
                 db.AddInParameter(savecommand, "BalanceAmount", System.Data.DbType.Decimal, orderheader.BalanceAmount == null ? 0 : orderheader.BalanceAmount);
+                db.AddInParameter(savecommand, "TransportCharges", System.Data.DbType.Decimal, orderheader.TransportCharges == null ? 0 : orderheader.TransportCharges);
                 db.AddOutParameter(savecommand, "NewOrderNo", System.Data.DbType.String, 25);
 
 
