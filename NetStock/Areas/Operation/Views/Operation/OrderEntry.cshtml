@@ -202,15 +202,16 @@
                                     <th>CGST</th>
                                     <th>SGST</th>
                                     <th>IGST</th>
-                                    <th>Invoice</th>
+                                    @*<th>Invoice</th>*@
                                     @*<th>selling price</th>*@
-                                        <th>Dis. type</th>
-                                        <th>Discount</th>
+                                    <th>Dis. type</th>
+                                    <th>Discount</th>
                                     @*<th>Adjust Amount</th>*@
                                     @*<th>Partial Pmt</th>*@
                                     @*<th>Total Amt </th>*@
                                     @*<th class="hidden">Record Status</th>*@
                                     @*<th>Transport Charges</th>*@
+                                    <th>Invoice</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -266,16 +267,16 @@
                                         @Html.HiddenFor(m => @Model.OrderDetails[itr].IGST)
                                         @Model.OrderDetails[itr].IGST.ToString("###")
                                     </td>
-                                    <td name="InvoiceAmount" id="InvoiceAmount_@itr">
-                                        @Html.HiddenFor(m => @Model.OrderDetails[itr].InvoiceAmount)
-                                        @Model.OrderDetails[itr].InvoiceAmount.ToString("###,###.00")
-                                    </td>
+                                    @*<td name="InvoiceAmount" id="InvoiceAmount_@itr">
+            @Html.HiddenFor(m => @Model.OrderDetails[itr].InvoiceAmount)
+            @Model.OrderDetails[itr].InvoiceAmount.ToString("###,###.00")
+        </td>*@
                                     @*<td name="SellPrice" id="SellPrice_@itr">
             @Html.HiddenFor(m => @Model.OrderDetails[itr].SellPrice)
             @Model.OrderDetails[itr].SellPrice.ToString("###,###.00")
         </td>*@
                                     <td name="DiscountType" id="DiscountType_@itr">
-                                        @Html.DropDownListFor(m => @Model.OrderDetails[itr].DiscountType, new SelectList(Model.DiscountTypeList, "Value", "Text", Model.OrderDetails[itr].DiscountType), null, new { @class = "form-control input-sm", id = "OrderDetails_" + itr + "DiscountType", onchange = "cmbDiscountType_Chnage(this,'" + Model.OrderDetails[itr].InvoiceAmount + "','OrderDetails_" + itr + "DiscountAmount','OrderDetails_" + itr + "InvoiceAmount',  '"+itr+"')", data_index = "" + itr + "", data_sp = "" + Model.OrderDetails[itr].InvoiceAmount + "" })
+                                        @Html.DropDownListFor(m => @Model.OrderDetails[itr].DiscountType, new SelectList(Model.DiscountTypeList, "Value", "Text", Model.OrderDetails[itr].DiscountType), null, new { @class = "form-control input-sm", id = "OrderDetails_" + itr + "DiscountType", onchange = "cmbDiscountType_Chnage(this,'" + Model.OrderDetails[itr].InvoiceAmount + "','OrderDetails_" + itr + "DiscountAmount','OrderDetails_" + itr + "InvoiceAmount',  '" + itr + "')", data_index = "" + itr + "", data_sp = "" + Model.OrderDetails[itr].InvoiceAmount + "" })
                                     </td>
                                     <td name="DiscountAmount" id="DiscountAmount_@itr">
                                         @Html.TextBoxFor(m => @Model.OrderDetails[itr].DiscountAmount, new { @Value = @Model.OrderDetails[itr].DiscountAmount.ToString("###,##0.00"), @class = "form-control input-sm", id = "OrderDetails_" + itr + "DiscountAmount", onchange = "DiscountAmount_Changed(this,'" + Model.OrderDetails[itr].InvoiceAmount + "','OrderDetails_" + itr + "DiscountType','OrderDetails_" + itr + "InvoiceAmount','" + itr + "')", data_index = "" + itr + "", data_distype = "" + Model.OrderDetails[itr].DiscountType + "", data_sp = "" + Model.OrderDetails[itr].InvoiceAmount + "" })
@@ -293,8 +294,13 @@
         </td>*@
 
                                     @*<td name="Transportchrgs" id="Transportchrgs_@itr">
-                                        @Html.TextBoxFor(m => @Model.OrderDetails[itr].DiscountAmount, new { @Value = @Model.OrderDetails[itr].DiscountAmount.ToString("###,##0.00"), @class = "form-control input-sm", id = "OrderDetails_" + itr + "Transportchrgs", onchange = "Transportchrgs_Changed(this)", data_index = "" + itr + "", data_distype = "" + Model.OrderDetails[itr].DiscountType + "", data_sp = "" + Model.OrderDetails[itr].SellPrice + "" })
-                                    </td>*@
+            @Html.TextBoxFor(m => @Model.OrderDetails[itr].DiscountAmount, new { @Value = @Model.OrderDetails[itr].DiscountAmount.ToString("###,##0.00"), @class = "form-control input-sm", id = "OrderDetails_" + itr + "Transportchrgs", onchange = "Transportchrgs_Changed(this)", data_index = "" + itr + "", data_distype = "" + Model.OrderDetails[itr].DiscountType + "", data_sp = "" + Model.OrderDetails[itr].SellPrice + "" })
+        </td>*@
+                                    <td name="InvoiceAmount" id="InvoiceAmount_@itr">
+                                        @Html.HiddenFor(m => @Model.OrderDetails[itr].InvoiceAmount)
+                                        @Model.OrderDetails[itr].InvoiceAmount.ToString("###,###.00")
+                                    </td>
+
                                     <td name="Action">
                                         @*<img class="img-class" src="~/Images/fa-trash-o_22.png" onclick="DeleteDetails(this,'chk_@itr','RecordStatus_@itr','@itr')" />*@
                                         @if (HtmlHelpers.hasRight("SalesEntry(ForeCast)Delete"))
@@ -846,7 +852,7 @@
         , "<input id='OrderDetails[" + rowCount + "].CGST' type='hidden' value=" + data.OrderDetail.CGST + " name='OrderDetails[" + rowCount + "].CGST'>" + data.OrderDetail.CGST
         , "<input id='OrderDetails[" + rowCount + "].SGST' type='hidden' value=" + data.OrderDetail.SGST + " name='OrderDetails[" + rowCount + "].SGST'>" + data.OrderDetail.SGST
         , "<input id='OrderDetails[" + rowCount + "].IGST' type='hidden' value=" + data.OrderDetail.IGST + " name='OrderDetails[" + rowCount + "].IGST'>" + data.OrderDetail.IGST
-        , "<input id='OrderDetails[" + rowCount + "].InvoiceAmount' type='hidden' value=" + data.OrderDetail.InvoiceAmount + " name='OrderDetails[" + rowCount + "].InvoiceAmount'>" + data.OrderDetail.InvoiceAmount
+      //  , "<input id='OrderDetails[" + rowCount + "].InvoiceAmount' type='hidden' value=" + data.OrderDetail.InvoiceAmount + " name='OrderDetails[" + rowCount + "].InvoiceAmount'>" + data.OrderDetail.InvoiceAmount
      //"<input id='OrderDetails[" + rowCount + "].ItemNo' type='hidden' value=" + data.OrderDetail.ItemNo + " name='OrderDetails[" + rowCount + "].ItemNo'>"
      //, "<input id='OrderDetails[" + rowCount + "].ProductDescription' type='hidden' value=" + data.OrderDetail.ProductDescription + " name='OrderDetails[" + rowCount + "].ProductDescription'>" + data.OrderDetail.ProductDescription
      //, "<input id='OrderDetails[" + rowCount + "].Location' type='hidden' value=" + data.OrderDetail.Location + " name='OrderDetails[" + rowCount + "].Location'>" + data.OrderDetail.LocationDescription
@@ -860,7 +866,7 @@
      //, "<input id='OrderDetails[" + rowCount + "].RecordStatus' type='hidden' value='1' name='OrderDetails[" + rowCount + "].RecordStatus'>"
      //'<img class="img-class" src="../Images/fa-trash-o_22.png" onclick="DeleteItemDetails(this,' + "'chk_" + rowCount + "'" + ',' + "'RecordStatus_" + rowCount + "'" + ',' + rowCount + ')" />'
                             //, "<input class='form-control input-sm' id='OrderDetails[" + rowCount + "].Transportchrgs' name='OrderDetails[" + rowCount + "].Transportchrgs onchange='Transportchrgs_Changed(this)''>"
-
+                            , "<input id='OrderDetails[" + rowCount + "].InvoiceAmount' type='hidden' value=" + data.OrderDetail.InvoiceAmount + " name='OrderDetails[" + rowCount + "].InvoiceAmount'>" + data.OrderDetail.InvoiceAmount
                             , '<button type="button" class="btn btn-default btn-sm" onclick="DeleteDetails(' + rowCount + ')"><i class="fa fa-trash" aria-hidden="true"></i></button>'
                         ];
                         $('#tblItem').dataTable().fnAddData(rowData);
@@ -996,13 +1002,14 @@
                 }
             }
         });*/
-
+        //var transportchargesamountOLD = parseFloat($('#txttransportcharges').val().replace(',', ''))
         function calculatetransportcharges(item) {
             debugger;
             var netamount = parseFloat($('#txtNetAmount').val().replace(',',''));
             var transportchargesamount = parseFloat($('#txttransportcharges').val().replace(',', ''))
 
             var balanceamount = (isNaN(netamount) ? 0 : netamount) + (isNaN(transportchargesamount) ? 0 : transportchargesamount);
+           // var balanceamount = ((isNaN(netamount) ? 0 : netamount) + (isNaN(transportchargesamount) ? 0 : transportchargesamount)) - transportchargesamountOLD;
             $('#txtNetAmount').val(balanceamount);
         }
 
@@ -1052,7 +1059,7 @@
                           });
                 $("#txtIGST").val(IGSTAmount.toFixed(2));
 
-                table.column(8).data()
+                table.column(10).data()
                           .each(function (value, index) {
                               NetAmount += Number($(value).val());
                               console.log('Data in index: ' + index + ' is: ' + NetAmount);
@@ -1063,7 +1070,7 @@
 
 
 
-            table.column(10).data()
+            table.column(9).data()
                 .each(function (value, index) {
                     debugger;
                     var controlid = "#" + $(value).attr("id");

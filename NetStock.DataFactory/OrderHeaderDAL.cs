@@ -155,7 +155,8 @@ namespace NetStock.DataFactory
                                 ProductCode = dt.ProductCode,
                                // BarCode = dt.BarCode == null ? "" : dt.BarCode,
                                 Quantity = dt.Quantity,
-                                Price = dt.SellPrice,
+                                //Price = dt.SellPrice,
+                                Price = dt.InvoiceAmount,
                                 CreatedBy = dt.CreatedBy,
                                 ModifiedBy = dt.ModifiedBy
 
@@ -174,9 +175,10 @@ namespace NetStock.DataFactory
                         invoiceHeader.PaymentDate = orderheader.OrderDate;
                         invoiceHeader.PendingPayment = orderheader.IsPayLater;
                         invoiceHeader.Status = true;
-                        invoiceHeader.TaxAmount = orderheader.VATAmount;
+                        invoiceHeader.TaxAmount = orderheader.VATAmount+orderheader.CGST+orderheader.IGST+orderheader.SGST;
                         invoiceHeader.VatAmount = orderheader.VATAmount;
-                        invoiceHeader.TotalAmount = orderheader.PaidAmount;
+                        // invoiceHeader.TotalAmount = orderheader.PaidAmount;
+                        invoiceHeader.TotalAmount = orderheader.NetAmount;
                         invoiceHeader.DueDate = orderheader.OrderDate.AddDays(orderheader.PaymentDays);
                         invoiceHeader.IsVat = orderheader.IsVAT;
                         invoiceHeader.IsWHTax = orderheader.IsWHTax;
