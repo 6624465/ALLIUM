@@ -126,6 +126,7 @@ namespace NetStock.DataFactory
 
                     var firstDayOfMonth = new DateTime(apinvoice.DocumentDate.Year, apinvoice.DocumentDate.Month, 1);
 
+                    
                     apinvoice.GLTransactionDetails.Where(dt => dt.Status == true).ToList().ForEach(dt =>
                     {
                         dt.DocumentNo = apinvoice.DocumentNo;

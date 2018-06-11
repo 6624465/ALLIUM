@@ -13,6 +13,7 @@ using System.Data.Common;
 
 namespace NetStock.DataFactory
 {
+
     public class OrderHeaderDAL
     {
         private Database db;
@@ -214,9 +215,115 @@ namespace NetStock.DataFactory
 
 
 
+                        var apinvoice = new NetStock.Contract.APInvoice();
+                        List<NetStock.Contract.APInvoiceDetail> APInvoiceDetail = new List<APInvoiceDetail>();
+
+                        List<NetStock.Contract.GLTransaction> GLTransactionDetails  = new List<GLTransaction>();
+
+
+                        foreach (var dt in orderheader.OrderDetails)
+                        {
+                            APInvoiceDetail.Add(new APInvoiceDetail
+                            {
+                                DocumentNo = dt.OrderNo,
+                                ItemNo = dt.ItemNo,
+                                AccountCode = "1019",
+                                ChargeCode = dt.ProductCode,
+                                OrderNo = dt.OrderNo,
+                                CurrencyCode = "INR",
+                                ExchangeRate = 1,
+                                BaseAmount = dt.BasePrice,
+                                LocalAmount = dt.InvoiceAmount,
+                                DiscountType = dt.DiscountType,
+                                Discount = dt.DiscountAmount,
+                                TotalAmount = dt.InvoiceAmount,
+                                TaxAmount = dt.SGST + dt.IGST + dt.CGST,
+                                WHAmount = 0,
+                                LocalAmountWithTax = 0,
+                                TaxCode = "",
+                                Remark = "",
+                                CreatedBy = dt.CreatedBy,
+                                CreatedOn = DateTime.Now,
+                                ModifiedBy = dt.ModifiedBy,
+                                ModifiedOn = DateTime.Now,
+
+                            });
+
+                            GLTransactionDetails.Add(new GLTransaction
+                            {
+                                TransactionNo = "",
+                                ItemNo = dt.ItemNo,
+                                BranchID = orderheader.BranchID,
+                                AccountCode = "1019",
+                                AccountDate = orderheader.OrderDate,
+                                Source = "API",
+                                DocumentType="GL",
+                                DocumentNo ="",
+                                DocumentDate = orderheader.OrderDate,
+                                DebtorCode ="",
+                                CreditorCode  = orderheader.CustomerCode,
+                                ChequeNo= "",
+                                BankInSlipNo ="",
+                                DateReconciled = orderheader.OrderDate,
+                                BankStatementPgNo =0,
+                                CurrencyCode ="INR",
+                                ExchangeRate =1,
+                                BaseAmount = value,
+                                LocalAmount = value,
+                                CreditAmount = 0,
+                                DebitAmount =0,
+                                Remark ="",
+                                BankStatementTotalPgNo=0,
+                                DebitCredit ="",
+                                Amount = value,
+                                DetailRemark=""
+
+                            });
+
+
+                        }
+
+                        
+                        apinvoice.DocumentNo = orderheader.OrderNo;
+                        apinvoice.DocumentDate = DateTime.Now;
+                        apinvoice.BranchID = orderheader.BranchID;
+
+                        apinvoice.ReferenceNo = "";
+                        apinvoice.CreditorCode = "";
+                        apinvoice.CreditTerm = "";
+                        apinvoice.CurrencyCode = "INR";
+
+                        apinvoice.ExchangeRate = 1;
+                        apinvoice.BaseAmount = value;
+                        apinvoice.LocalAmount = value;
+                        apinvoice.DiscountAmount = orderheader.DiscountAmount;
+                        apinvoice.PaymentAmount = value;
+                        apinvoice.IsVAT = orderheader.IsVAT;
+                        apinvoice.TaxAmount = orderheader.VATAmount + orderheader.CGST + orderheader.IGST + orderheader.SGST;
+                        apinvoice.IsWHTax = orderheader.IsWHTax;
+                        apinvoice.WHPercent = 0;
+                        apinvoice.WHAmount = 0;
+                        apinvoice.TotalAmount = value;
+                        apinvoice.Remark = "";
+                        apinvoice.Source = "API";
+                        apinvoice.IsCancel = false;
+                        apinvoice.CreatedBy = orderheader.CreatedBy;
+                        apinvoice.CreatedOn = DateTime.Now;
+                        apinvoice.ModifiedBy = orderheader.ModifiedBy;
+                        apinvoice.ModifiedOn = DateTime.Now;
+                        apinvoice.CancelledBy = "";
+                        apinvoice.CancelledOn = DateTime.Now;
+                        apinvoice.CancelReason = "";
+                        apinvoice.APInvoiceDetails = APInvoiceDetail;
+                        apinvoice.GLTransactionDetails = GLTransactionDetails;
+
+                        result = new NetStock.DataFactory.APInvoiceDAL().Save(apinvoice, transaction) == true ? 1 : 0;
+
+
+
                     }
 
-                    
+
                     if (isNewRecord)
                     {
 

@@ -646,6 +646,9 @@ namespace NetStock.Areas.Operation.Controllers
                 order.CreatedBy = Session["DEFAULTUSER"].ToString();
                 order.ModifiedBy = Session["DEFAULTUSER"].ToString();
                 order.BranchID = Convert.ToInt16(Session["BranchId"]);
+                //order.CreatedOn = DateTime.Now;
+                // order.ModifiedOn = DateTime.Now;
+                order.OrderDate = DateTime.Now;
                 //order.IsPayLater = (bool)(order.PaymentDays > 0);
                 if (order.OrderNo == "NEW")
                 {
@@ -653,6 +656,8 @@ namespace NetStock.Areas.Operation.Controllers
                 }
 
                 result = new NetStock.BusinessFactory.OrderHeaderBO().SaveOrderHeader(order);
+
+
 
                 if (result)
                 {
