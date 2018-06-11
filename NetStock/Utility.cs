@@ -1,4 +1,6 @@
-﻿using System;
+﻿using NetStock.Contract;
+using System.Collections;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,12 +10,28 @@ using System.Web.Configuration;
 
 
 namespace NetStock
-{    
+{
+
+    public enum DefaultAccountCodes
+    {
+        BANKCHARGESACCOUNTCODE = 1,
+        ARVATACCOUNTCODE = 2,
+        ARWHACCOUNTCODE = 3,
+        APVATACCOUNTCODE = 4,
+        APWHACCOUNTCODE = 5,
+        ARADVANCEVATACCOUNTCODE = 6
+
+    };
     public static class Utility
     {
+        public static string NEWRECORD = "NEW";
+        public static string DEFAULTUSER = "SYSTEM";
+        public static string DEFAULTCURRENCYCODE = "THB";
         //public static string DEFAULTUSER = "SYSTEM";
         //public static string DEFAULTUSERNAME = "SYSTEM";
         public static bool DEFAULTSTATUS = true;
+
+        public static string BANKCHARGESACCOUNTCODE = "5310-04";
 
         //public static short DEFAULTBRANCH = 10;
 
@@ -365,6 +383,241 @@ namespace NetStock
 
         }
 
+        public static IEnumerable<SelectListItem> GetAccountGroupItemList(short branchID)
+        {
+            var lstAccountGroup = new NetStock.BusinessFactory.AccountGroupBO().GetList();
+
+            var lstCoa = new NetStock.BusinessFactory.ChartOfAccountBO().GetList(branchID).Select(x => new SelectListItem { Value = x.AccountCode, Text = x.Description }).ToList();
+
+
+
+
+            if (lstAccountGroup == null)
+                return null;
+
+            var selectList = lstAccountGroup.Select(c =>
+                                new SelectListItem
+                                {
+                                    Value = c.Code,
+                                    Text = c.Description
+                                }).ToList();
+
+            selectList.AddRange(lstCoa);
+
+            return new SelectList(selectList, "Value", "Text");
+
+
+        }
+
+
+        public static IEnumerable<SelectListItem> GetAccountCodeItemList()
+        {
+            var lstaccountcode = new NetStock.BusinessFactory.ChartOfAccountBO().GetList(SsnBranch);
+
+            if (lstaccountcode == null)
+                return null;
+
+            var selectList = lstaccountcode.Select(c =>
+                                new SelectListItem
+                                {
+                                    Value = c.AccountCode,
+                                    Text = c.Description
+                                });
+
+            return new SelectList(selectList, "Value", "Text");
+
+
+        }
+
+        public static short SsnBranch
+        {
+            get
+            {
+                return Convert.ToInt16(HttpContext.Current.Session["BranchId"]);
+            }
+        }
+
+
+        public static IEnumerable<SelectListItem> GetCreditorAccountList()
+        {
+            var countryList = new NetStock.BusinessFactory.ChartOfAccountBO().GetCreditorAccountList();
+
+            var selectList = countryList.Select(c =>
+                                new SelectListItem
+                                {
+                                    Value = c.AccountCode,
+                                    Text = string.Format("{0} ({1})", c.AccountCode, c.Description)
+                                });
+
+            return new SelectList(selectList, "Value", "Text");
+
+        }
+
+        public static IEnumerable<SelectListItem> GetCreditorList()
+        {
+            var countryList = new NetStock.BusinessFactory.CreditorBO().GetList();
+
+            var selectList = countryList.Select(c =>
+                                new SelectListItem
+                                {
+                                    Value = c.CreditorCode,
+                                    Text = string.Format("{0} ({1})", c.CreditorName, c.CreditorCode)
+                                });
+
+            return new SelectList(selectList, "Value", "Text");
+
+        }
+
+        public static ChartOfAccount GetAccountType(string accountCode)
+        {
+            ChartOfAccount chartOfAccount = new ChartOfAccount();
+            chartOfAccount.AccountCode = accountCode;
+            chartOfAccount.BranchID = Utility.SsnBranch;
+            var accountType = new NetStock.BusinessFactory.ChartOfAccountBO().GetChartOfAccount(chartOfAccount);
+            return accountType;
+
+        }
+
+
+        public static string GetDefaultAccountCodes(DefaultAccountCodes code)
+        {
+
+            var lstSystemWideConfiguration = new NetStock.BusinessFactory.SystemWideConfigurationBO().GetList();
+
+            var value = "";
+            var config = "";
+
+            switch (code)
+            {
+                case DefaultAccountCodes.BANKCHARGESACCOUNTCODE:
+                    config = "Bank Fee Account Code";
+                    break;
+                case DefaultAccountCodes.ARVATACCOUNTCODE:
+                    config = "AR VAT Account Code";
+                    break;
+                case DefaultAccountCodes.ARWHACCOUNTCODE:
+                    config = "AR W/H Account Code";
+                    break;
+                case DefaultAccountCodes.APVATACCOUNTCODE:
+                    config = "AP VAT Account Code";
+                    break;
+                case DefaultAccountCodes.APWHACCOUNTCODE:
+                    config = "AP W/H Account Code";
+                    break;
+
+                case DefaultAccountCodes.ARADVANCEVATACCOUNTCODE:
+                    config = "AR Adv. VAT Account Code";
+                    break;
+
+                default:
+                    break;
+            }
+            value = lstSystemWideConfiguration.Where(x => x.DisplayName == config).FirstOrDefault().ConfigurationValue;
+
+            return value;
+        }
+
+        public static IEnumerable<SelectListItem> GetPaymentTypeList(string cbCategory)
+        {
+            var lstLookUp = new NetStock.BusinessFactory.LookupBO().GetList().Where(lk => lk.Category == cbCategory).ToList();
+
+            if (lstLookUp == null)
+                return null;
+
+            var selectList = lstLookUp.Select(c =>
+                                new SelectListItem
+                                {
+                                    Value = c.LookupCode,
+                                    Text = c.Description
+                                });
+
+            return new SelectList(selectList, "Value", "Text");
+
+        }
+
+        public static IEnumerable<SelectListItem> GetBankCodeList()
+        {
+            var countryList = new NetStock.BusinessFactory.BankBO().GetList();
+
+            var selectList = countryList.Select(c =>
+                                new SelectListItem
+                                {
+                                    Value = c.BankCode,
+                                    Text = string.Format("{0} - {1}", c.BankCode, c.Name)
+                                });
+
+            return new SelectList(selectList, "Value", "Text");
+
+        }
+        public static IEnumerable<SelectListItem> GetChargeCodeItemList()
+        {
+            var lstchargecode = new NetStock.BusinessFactory.ChargeCodeBO().GetList(Utility.SsnBranch);
+
+            if (lstchargecode == null)
+                return null;
+
+            var selectList = lstchargecode.Select(c =>
+                                new SelectListItem
+                                {
+                                    Value = c.ChargeCode,
+                                    Text = c.Description
+                                });
+
+            return new SelectList(selectList, "Value", "Text");
+
+
+        }
+
+        public static IEnumerable<SelectListItem> GetReceiptTypeList(string cbCategory)
+        {
+            var lstLookUp = new NetStock.BusinessFactory.LookupBO().GetList().Where(lk => lk.Category == cbCategory).ToList();
+
+            if (lstLookUp == null)
+                return null;
+
+            var selectList = lstLookUp.Select(c =>
+                                new SelectListItem
+                                {
+                                    Value = c.LookupCode,
+                                    Text = c.Description
+                                });
+
+            return new SelectList(selectList, "Value", "Text");
+
+        }
+
+        public static IEnumerable<SelectListItem> GetDebtorList()
+        {
+            var countryList = new NetStock.BusinessFactory.DebtorBO().GetList();
+
+            var selectList = countryList.Select(c =>
+                                new SelectListItem
+                                {
+                                    Value = c.DebtorCode,
+                                    Text = string.Format("{0} ({1})", c.DebtorName, c.DebtorCode)
+                                });
+
+            return new SelectList(selectList, "Value", "Text");
+
+        }
+
+
+        public static IEnumerable<SelectListItem> GetDebtorAccountList()
+        {
+            var countryList = new NetStock.BusinessFactory.ChartOfAccountBO().GetDebtorAccountList();
+
+            var selectList = countryList.Select(c =>
+                                new SelectListItem
+                                {
+                                    Value = c.AccountCode,
+                                    Text = string.Format("{0} ({1})", c.AccountCode, c.Description)
+                                });
+
+            return new SelectList(selectList, "Value", "Text");
+
+        }
+
+
     }
 
 
@@ -405,4 +658,22 @@ namespace NetStock
         OVERSEAS = 2
     }
 
+
+    public static class ModelStateHelper
+    {
+        public static IEnumerable Errors(this ModelStateDictionary modelState)
+        {
+            if (!modelState.IsValid)
+            {
+                return modelState.ToDictionary(kvp => kvp.Key,
+                    kvp => kvp.Value.Errors
+                                    .Select(e => e.ErrorMessage).ToArray())
+                                    .Where(m => m.Value.Count() > 0);
+            }
+            return null;
+        }
+    }
+
+
+    
 }

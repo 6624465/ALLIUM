@@ -124,10 +124,18 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Areas\AP\APAreaRegistration.cs" />
+    <Compile Include="Areas\AP\Controllers\APController.cs" />
+    <Compile Include="Areas\AR\ARAreaRegistration.cs" />
+    <Compile Include="Areas\AR\Controllers\ARController.cs" />
     <Compile Include="Areas\Billing\BillingAreaRegistration.cs" />
     <Compile Include="Areas\Billing\Controllers\BillingController.cs" />
+    <Compile Include="Areas\CB\CBAreaRegistration.cs" />
+    <Compile Include="Areas\CB\Controllers\CBController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Dashboard\DashboardAreaRegistration.cs" />
+    <Compile Include="Areas\GL\Controllers\GLController.cs" />
+    <Compile Include="Areas\GL\GLAreaRegistration.cs" />
     <Compile Include="Areas\MasterData\Controllers\MasterDataController.cs" />
     <Compile Include="Areas\MasterData\MasterDataAreaRegistration.cs" />
     <Compile Include="Areas\Operation\Controllers\OperationController.cs" />
@@ -159,6 +167,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrapValidator.css" />
     <Content Include="Content\dataTables.bootstrap.css" />
+    <Content Include="Content\datatables.min.css" />
     <Content Include="Content\dataTables.responsive.css" />
     <Content Include="Content\fileupload\jquery.fileupload-ui.css" />
     <Content Include="Content\fileupload\jquery.fileupload.css" />
@@ -201,6 +210,7 @@
     <Content Include="Areas\Operation\Views\Operation\GoodsReceiveDomestic.cshtml" />
     <Content Include="Areas\Operation\Views\Operation\GoodsReceiveoverseas.cshtml" />
     <Content Include="Scripts\app.js" />
+    <Content Include="Scripts\app.min.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -329,6 +339,62 @@
     <Content Include="Areas\Operation\Views\Operation\OrdersIssueList.cshtml" />
     <Content Include="Areas\Operation\Views\Operation\OrderIssueEntry.cshtml" />
     <Content Include="Areas\User\Views\User\RoleRights.cshtml" />
+    <Content Include="Areas\MasterData\Views\MasterData\ChartOfAccounts.cshtml" />
+    <Content Include="Areas\MasterData\Views\MasterData\ChartOfAccount.cshtml" />
+    <Content Include="Areas\MasterData\Views\MasterData\ChargeCode.cshtml" />
+    <Content Include="Areas\MasterData\Views\MasterData\NewChargeCode.cshtml" />
+    <Content Include="Areas\MasterData\Views\MasterData\AssetMaster.cshtml" />
+    <Content Include="Areas\MasterData\Views\MasterData\AddAsset.cshtml" />
+    <Content Include="Areas\AP\Views\AP\AddAPCreditNoteItem.cshtml" />
+    <Content Include="Areas\AP\Views\AP\AddAPDebitNoteItem.cshtml" />
+    <Content Include="Areas\AP\Views\AP\AddAPInvoiceItem.cshtml" />
+    <Content Include="Areas\AP\Views\AP\addinvoice.cshtml" />
+    <Content Include="Areas\AP\Views\AP\AddSupplier.cshtml" />
+    <Content Include="Areas\AP\Views\AP\APCreditNote.cshtml" />
+    <Content Include="Areas\AP\Views\AP\APCreditNoteList.cshtml" />
+    <Content Include="Areas\AP\Views\AP\APDebitNote.cshtml" />
+    <Content Include="Areas\AP\Views\AP\APDebitNoteList.cshtml" />
+    <Content Include="Areas\AP\Views\AP\APInvoice.cshtml" />
+    <Content Include="Areas\AP\Views\AP\APInvoiceList.cshtml" />
+    <Content Include="Areas\AP\Views\AP\EDIAPInvoice.cshtml" />
+    <Content Include="Areas\AP\Views\AP\EDIAPInvoiceList.cshtml" />
+    <Content Include="Areas\AP\Views\AP\Suppliers.cshtml" />
+    <Content Include="Areas\AR\Views\AR\AddARCreditNoteItem.cshtml" />
+    <Content Include="Areas\AR\Views\AR\AddARDebitNoteItem.cshtml" />
+    <Content Include="Areas\AR\Views\AR\AddARInvoiceItem.cshtml" />
+    <Content Include="Areas\AR\Views\AR\ARCreditNote.cshtml" />
+    <Content Include="Areas\AR\Views\AR\ARDebitNote.cshtml" />
+    <Content Include="Areas\AR\Views\AR\ARInvoice.cshtml" />
+    <Content Include="Areas\AR\Views\AR\ARInvoiceList.cshtml" />
+    <Content Include="Areas\AR\Views\AR\Customers.cshtml" />
+    <Content Include="Areas\AR\Views\AR\DebtorProfile.cshtml" />
+    <Content Include="Areas\AR\Views\web.config" />
+    <Content Include="Areas\AR\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\CB\Views\CB\AddChargeCode.cshtml" />
+    <Content Include="Areas\CB\Views\CB\AddChargeCodeReceipt.cshtml" />
+    <Content Include="Areas\CB\Views\CB\BankProfile.cshtml" />
+    <Content Include="Areas\CB\Views\CB\BankProfileList.cshtml" />
+    <Content Include="Areas\CB\Views\CB\BankTransfer.cshtml" />
+    <Content Include="Areas\CB\Views\CB\CBBankReconciliation.cshtml" />
+    <Content Include="Areas\CB\Views\CB\CBPayment.cshtml" />
+    <Content Include="Areas\CB\Views\CB\CBPaymentList.cshtml" />
+    <Content Include="Areas\CB\Views\CB\CBReceipt%28sharmacopy0707%29.cshtml" />
+    <Content Include="Areas\CB\Views\CB\CBReceipt.cshtml" />
+    <Content Include="Areas\CB\Views\CB\CBReceipt.cshtml.bak" />
+    <Content Include="Areas\CB\Views\CB\CBReceiptList.cshtml" />
+    <Content Include="Areas\CB\Views\CB\_BankReconDetails.cshtml" />
+    <Content Include="Areas\CB\Views\web.config" />
+    <Content Include="Areas\CB\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\GL\Views\GL\FinancialPeriod.cshtml" />
+    <Content Include="Areas\GL\Views\GL\GLJournalEntry.cshtml" />
+    <Content Include="Areas\GL\Views\GL\GLJournalListing.cshtml" />
+    <Content Include="Areas\GL\Views\GL\GLOpening.cshtml" />
+    <Content Include="Areas\GL\Views\GL\JVManual.cshtml" />
+    <Content Include="Areas\GL\Views\GL\JVManualListing.cshtml" />
+    <Content Include="Areas\GL\Views\web.config" />
+    <Content Include="Areas\GL\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\AP\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\AP\Views\web.config" />
     <None Include="Properties\PublishProfiles\kiran.pubxml" />
     <None Include="Properties\PublishProfiles\NetStockDiamond.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -351,7 +417,10 @@
     <Content Include="Scripts\jquery-jvectormap-world-mill-en.js" />
     <Content Include="Scripts\jquery-migrate-1.2.1.min.js" />
     <Content Include="Scripts\jquery.dataTables.js" />
+    <Content Include="Scripts\jquery.dataTables.min.js" />
     <Content Include="Scripts\jquery.ui.widget.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\js\GoodsReceive.js" />
     <Content Include="Scripts\js\GoodsReceiveDomestic.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -415,10 +484,18 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\AP\Models\" />
+    <Folder Include="Areas\AP\Views\Shared\" />
+    <Folder Include="Areas\AR\Models\" />
+    <Folder Include="Areas\AR\Views\Shared\" />
     <Folder Include="Areas\Billing\Models\" />
     <Folder Include="Areas\Billing\Views\Shared\" />
+    <Folder Include="Areas\CB\Models\" />
+    <Folder Include="Areas\CB\Views\Shared\" />
     <Folder Include="Areas\Dashboard\Models\" />
     <Folder Include="Areas\Dashboard\Views\Shared\" />
+    <Folder Include="Areas\GL\Models\" />
+    <Folder Include="Areas\GL\Views\Shared\" />
     <Folder Include="Areas\MasterData\Models\" />
     <Folder Include="Areas\MasterData\Views\Shared\" />
     <Folder Include="Areas\Operation\Models\" />
@@ -445,6 +522,10 @@
     <ProjectReference Include="..\NetStock.Contract\NetStock.Contract.csproj">
       <Project>{bf0c3aa9-e595-47b7-9510-84cf5dcc1ae9}</Project>
       <Name>NetStock.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NetStock.DataFactory\NetStock.DataFactory.csproj">
+      <Project>{d1f0f08e-deda-4598-8be2-e45e44052adb}</Project>
+      <Name>NetStock.DataFactory</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

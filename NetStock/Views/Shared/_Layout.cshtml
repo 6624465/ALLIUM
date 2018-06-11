@@ -3,11 +3,17 @@
 <head>
     <meta charset="utf-8" />
     <title>@ViewBag.Title - NetStock &nbsp; POS &amp; Stock Maintenance Application</title>
+
+
+    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/bootstrap-datetimepicker.css")" rel="stylesheet" />
     <link href="@Url.Content("~/Content/font-awesome-4.5.0/css/font-awesome.min.css")" rel="stylesheet" />
     <link href="@Url.Content("~/Content/bootstrap.css")" rel="stylesheet" />
     <link href="@Url.Content("~/Content/AdminLTE.css")" rel="stylesheet" />
     <link href="@Url.Content("~/Content/_all-skins.min.css")" rel="stylesheet" />
     <link href="@Url.Content("~/Content/blue.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/datatables.min.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/select2.min.css")" rel="stylesheet" />
 
 
 
@@ -133,6 +139,9 @@
         }
     </style>
     @RenderSection("css", required: false)
+
+    @RenderSection("CssSection", required: false)
+
     <!-- End of layout top -->
 </head>
 
@@ -170,7 +179,7 @@
                                     <img src="@Url.Content("~/images/avatar.png")" class="img-circle" alt="User Image" />
                                     <p>
                                         @HttpContext.Current.Session["DEFAULTUSER"].ToString() - Administrator
-                                       @* <small>-</small>*@
+                                        @* <small>-</small>*@
                                     </p>
                                 </li>
                                 <li class="user-footer">
@@ -216,7 +225,7 @@
                             }
                             @if (HtmlHelpers.hasRight("UOM"))
                             {
-                            <li><a href="@Url.Action("UOMList", "MasterData", new { area = "MasterData" }, null)"><i class="fa fa-cube fa-lg "></i>&nbsp;U O M </a></li>
+                                <li><a href="@Url.Action("UOMList", "MasterData", new { area = "MasterData" }, null)"><i class="fa fa-cube fa-lg "></i>&nbsp;U O M </a></li>
                             }
                             @if (HtmlHelpers.hasRight("Currency"))
                             {
@@ -250,6 +259,12 @@
                             {
                                 <li><a href="@Url.Action("Customers", "MasterData", new { area = "MasterData" }, null)"><i class="fa fa-users" aria-hidden="true"></i>&nbsp;Customer</a></li>
                             }
+
+                            <li><a href="@Url.Action("ChartOfAccountMaster", "MasterData", new { area = "MasterData" }, null)"><i class="fa fa-link"></i>Chart Of Accounts</a></li>
+                            <li><a href="@Url.Action("ChargeCodeMaster", "MasterData", new { area = "MasterData" }, null)"><i class="fa fa-circle-o"></i>Charge Code</a></li>
+                            <li><a href="@Url.Action("AssetMaster", "MasterData", new { area = "MasterData" }, null)"><i class="fa fa-tags"></i>Assets </a></li>
+
+
                         </ul>
                     </li>
                     <li class="treeview">
@@ -295,10 +310,10 @@
                             @if (HtmlHelpers.hasRight("SalesEntry"))
                             {
                                 <li><a href="@Url.Action("OrdersIssueList", "Operation", new { area = "Operation" }, null)">&nbsp;<i class="fa fa-sticky-note" aria-hidden="true"></i>&nbsp;Sales Entry</a></li>
-                           }
+                            }
                             @if (HtmlHelpers.hasRight("GoodsIssue"))
                             {
-                                 <li><a href="@Url.Action("GoodsIssueList", "Operation", new { area = "Operation" }, null)">&nbsp;<i class="fa fa-truck" aria-hidden="true"></i>&nbsp;Goods Issue</a></li>
+                                <li><a href="@Url.Action("GoodsIssueList", "Operation", new { area = "Operation" }, null)">&nbsp;<i class="fa fa-truck" aria-hidden="true"></i>&nbsp;Goods Issue</a></li>
                             }
                         </ul>
                     </li>
@@ -336,6 +351,67 @@
                             }
                         </ul>
                     </li>
+
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-pie-chart"></i>
+                            <span>Accounts Payable</span>
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="@Url.Action("SupplierList", "AP", new { area = "AP" }, null)"><i class="fa fa-male" aria-hidden="true"></i>&nbsp;Supplier Profile (Creditor)</a></li>
+                            <li><a href="@Url.Action("APInvoiceList", "AP", new { area = "AP" }, null)"><i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;AP - Invoice List</a></li>
+                            <li><a href="@Url.Action("APDebitNote", "AP", new { area = "AP" }, null)"><i class="fa fa-credit-card" aria-hidden="true"></i>&nbsp;AP - Debit Note</a></li>
+                            <li><a href="@Url.Action("APCreditNote", "AP", new { area = "AP" }, null)"><i class="fa fa-credit-card-alt" aria-hidden="true"></i>&nbsp;AP - Credit Note</a></li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-laptop"></i>
+                            <span>Accounts Receivable</span>
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="@Url.Action("CustomerList", "AR", new { area = "AR" }, null)"><i class="fa fa-male" aria-hidden="true"></i>&nbsp;Customer Profile (Debtor)</a></li>
+                            <li><a href="@Url.Action("ARInvoiceList", "AR", new { area = "AR" }, null)"><i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;AR - Invoice List</a></li>
+                            <li><a href="@Url.Action("ARDebitNote", "AR", new { area = "AR" }, null)"><i class="fa fa-credit-card" aria-hidden="true"></i>&nbsp;AR - Debit Note</a></li>
+                            <li><a href="@Url.Action("ARCreditNote", "AR", new { area = "AR" }, null)"><i class="fa fa-credit-card-alt" aria-hidden="true"></i>&nbsp;AR - Credit Note</a></li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-edit"></i><span>CB Transaction</span>
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="@Url.Action("BankProfileList", "CB", new { area = "CB" }, null)"><i class="fa fa-university" aria-hidden="true"></i>&nbsp;Bank Profile</a></li>
+                            <li><a href="@Url.Action("CBBankReconciliation", "CB", new { area = "CB" }, null)"><i class="fa fa-university" aria-hidden="true"></i>&nbsp;Bank Recon</a></li>
+
+                            <li><a href="@Url.Action("CBReceiptList", "CB", new { area = "CB" }, null)"><i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;Receipts</a></li>
+                            <li><a href="@Url.Action("CBPaymentList", "CB", new { area = "CB" }, null)"><i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;Payments</a></li>
+
+
+                            @*<li><a href="@Url.Action("CBReceipt", "CB", new { area = "CB", CBReceiptType = "", DocumentNo = "NEW" },null)"><i class="fa fa-money" aria-hidden="true"></i>&nbsp;CB - Receipts</a></li>
+                                <li><a href="@Url.Action("CBPayment", "CB", new { area = "CB", CBPaymentType = "", DocumentNo = "NEW" }, null)"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;CB - Payments</a></li>*@
+                            <li><a href="@Url.Action("BankTransfer", "CB", new { area = "CB" }, null)"><i class="fa fa-exchange" aria-hidden="true"></i>&nbsp;Bank Transfer</a></li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-table"></i><span>G L</span>
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <!-- treeview-menu active menu-open -->
+                            <li><a href="@Url.Action("GLFinancialPeriod", "GL", new { area = "GL" }, null)"><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Financial Period</a></li>
+                            <li><a href="@Url.Action("GLOpening", "GL", new { area = "GL" }, null)"><i class="fa fa-external-link" aria-hidden="true"></i>&nbsp;G L - Opening</a></li>
+                            <li><a href="@Url.Action("GLJournalList", "GL", new { area = "GL" }, null)"><i class="fa fa-openid" aria-hidden="true"></i>&nbsp;G L - Journal</a></li>
+                            <li><a href="@Url.Action("JVManualList", "GL", new { area = "GL" }, null)"><i class="fa fa-openid" aria-hidden="true"></i>&nbsp;J V - Manual</a></li>
+                            @*<li><a href="@Url.Action("GLJournalEntry", "GL", new { area = "GL" }, null)"><i class="fa fa-openid" aria-hidden="true"></i>&nbsp;G L - Journal</a></li>
+                                <li><a href="@Url.Action("JVManual", "GL", new { area = "GL" }, null)"><i class="fa fa-openid" aria-hidden="true"></i>&nbsp;J V - Manual</a></li>*@
+                        </ul>
+                    </li>
+
                     <li class="treeview">
                         <a href="#">
                             <i class="fa fa-pie-chart" aria-hidden="true"></i><span>Reports</span><i class="fa fa-angle-left pull-right"></i>
@@ -398,10 +474,42 @@
     @Html.Partial("_ShowConfirmDialog")
 
     <script src="@Url.Content("~/Scripts/jquery-1.10.2.js")"></script>
+
+    <script src="@Url.Content("~/Scripts/jquery-ui.js")"></script>
+    @*<script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.js")"></script>*@
+    <script src="@Url.Content("~/Scripts/moment.js")"></script>
+    @*<script src="@Url.Content("~/Scripts/app.min.js")"></script>*@
+    <script src="@Url.Content("~/Scripts/bootstrap-datetimepicker.js")"></script>
+    @*<script src="@Url.Content("~/Scripts/jquery.dataTables.min.js")"></script>*@
+    @*<script src="@Url.Content("~/Scripts/dataTables.bootstrap.js")"></script>*@
+    <script src="@Url.Content("~/Scripts/select2.min.js")"></script>
+    @*<script src="@Url.Content("~/Scripts/js/layout.js")"></script>*@
+
     <script src="@Url.Content("~/Scripts/jquery.validate.js")"></script>
     <script src="@Url.Content("~/Scripts/bootstrap.js")"></script>
     <script src="@Url.Content("~/Scripts/app.js")"></script>
     <script type="text/javascript">
+
+        var ActionType;
+        function ModalShow(Message, ResponseType, actionType) {
+            $('#myModalTest').modal({
+                keyboard: false
+            }, 'show');
+            if (ResponseType == "Failure") {
+                $('#myModalTestInnerDiv').removeClass("modal-success").addClass("modal-danger");
+            }
+            else {
+                $('#myModalTestInnerDiv').removeClass("modal-danger").addClass("modal-success");
+            }
+
+            ActionType = actionType
+            $("#modalHeader").text(ResponseType);
+            $("#pmodalid").text(Message);
+            $('#myModalTestInnerDiv').show();
+        }
+
+
+
         var RawUrl = '@Request.Url';
         var ErrorUrl = '@Url.Content("~/Account/Login")';
         var dateFormatStr = '';
@@ -415,10 +523,10 @@
 
     @RenderSection("scripts", required: false)
     @*<script type="text/javascript">
-        $(function () {
-            $('.dataTables_paginate ul').addClass('pagination-sm');
-        });
-    </script>*@
+            $(function () {
+                $('.dataTables_paginate ul').addClass('pagination-sm');
+            });
+        </script>*@
 
     <!-- AdminLTE App -->
 

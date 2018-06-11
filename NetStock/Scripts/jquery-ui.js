@@ -10906,7 +10906,7 @@ var effectDrop = $.effects.effect.drop = function( o, done ) {
 		show = mode === "show",
 		direction = o.direction || "left",
 		ref = ( direction === "up" || direction === "down" ) ? "top" : "left",
-		motion = ( direction === "up" || direction === "left" ) ? "pos" : "neg",
+		motion = ( direction === "up" || direction === "left" ) ? "netStock" : "neg",
 		animation = {
 			opacity: show ? 1 : 0
 		},
@@ -10922,13 +10922,13 @@ var effectDrop = $.effects.effect.drop = function( o, done ) {
 	if ( show ) {
 		el
 			.css( "opacity", 0 )
-			.css( ref, motion === "pos" ? -distance : distance );
+			.css( ref, motion === "netStock" ? -distance : distance );
 	}
 
 	// Animation
 	animation[ ref ] = ( show ?
-		( motion === "pos" ? "+=" : "-=" ) :
-		( motion === "pos" ? "-=" : "+=" ) ) +
+		( motion === "netStock" ? "+=" : "-=" ) :
+		( motion === "netStock" ? "-=" : "+=" ) ) +
 		distance;
 
 	// Animate

@@ -415,7 +415,7 @@
                         <div>
                             <label for="txtInvoiceNo" class="col-md-4 control-label input-sm">Transport Charges</label>
                             <div class="pull-right col-sm-4">
-                                @Html.TextBoxFor(m => m.TransportCharges, new { @Value = Model.TransportCharges.ToString("###,##0"), @class = "form-control input-sm-red", @id = "txttransportcharges", @align = "right" ,onblur="calculatetransportcharges()"})
+                                @Html.TextBoxFor(m => m.TransportCharges, new { @Value = Model.TransportCharges.ToString("###,##0"), @class = "form-control input-sm-red", @id = "txttransportcharges", @align = "right" , onchange = "calculatetransportcharges()"})
                             </div>
 
                         </div>
@@ -431,7 +431,10 @@
                         <div>
                             <label for="txtInvoiceNo" class="col-md-4 control-label input-sm">Net Amt</label>
                             <div class="pull-right col-sm-4">
-                                @Html.TextBoxFor(m => m.NetAmount, new { @Value = Model.NetAmount.ToString("###,##0"), @class = "form-control input-sm-green", @id = "txtNetAmount", @align = "right", @readonly = "true" })
+                                @*@Html.TextBoxFor(m => m.NetAmount, new { @Value = Model.NetAmount.ToString("###,##0"), @class = "form-control input-sm-green", @id = "txtNetAmount", @align = "right", @readonly = "true" })*@
+
+                                @Html.TextBoxFor(m => m.NetAmount, new { @Value = Model.NetAmount.ToString("###,##0.00"), @class = "form-control input-sm-green", @id = "txtNetAmount", @align = "right", @readonly = "true" })
+
                             </div>
 
                         </div>
@@ -1065,6 +1068,8 @@
                               console.log('Data in index: ' + index + ' is: ' + NetAmount);
                           });
             $("#txtTotalAmount").val(Math.round(NetAmount));
+
+           // $("#txtTotalAmount").val(NetAmount.toFixed(2));
 
 
 
