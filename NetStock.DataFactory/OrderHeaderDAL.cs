@@ -104,7 +104,23 @@ namespace NetStock.DataFactory
                 db.AddInParameter(savecommand, "ISWHTax", System.Data.DbType.Boolean, orderheader.IsWHTax);
                 db.AddInParameter(savecommand, "WHTaxPercent", System.Data.DbType.Decimal, orderheader.WHTaxPercent);
                 db.AddInParameter(savecommand, "WithHoldingAmount", System.Data.DbType.Decimal, orderheader.WithHoldingAmount);
-                db.AddInParameter(savecommand, "NetAmount", System.Data.DbType.Decimal, orderheader.NetAmount);
+
+                decimal value = 0;
+                int multiplier = 100;
+                decimal double_value = orderheader.NetAmount;
+                int double_result = (int)((double_value - (int)double_value) * multiplier);
+                if (double_result > 5)
+                {
+                    value = Math.Ceiling(orderheader.NetAmount);
+                }
+                else
+                {
+                    value = Math.Floor(orderheader.NetAmount);
+                }
+
+                db.AddInParameter(savecommand, "NetAmount", System.Data.DbType.Decimal, value);
+
+                //db.AddInParameter(savecommand, "NetAmount", System.Data.DbType.Decimal, orderheader.NetAmount);
                 db.AddInParameter(savecommand, "PaidAmount", System.Data.DbType.Decimal, orderheader.PaidAmount == null ? 0 : orderheader.PaidAmount);
                 db.AddInParameter(savecommand, "PaymentType", System.Data.DbType.String, orderheader.PaymentType==null ? "" :orderheader.PaymentType);
                 db.AddInParameter(savecommand, "IsRequiredDelivery", System.Data.DbType.Boolean, orderheader.IsRequireDelivery);
@@ -178,7 +194,10 @@ namespace NetStock.DataFactory
                         invoiceHeader.TaxAmount = orderheader.VATAmount+orderheader.CGST+orderheader.IGST+orderheader.SGST;
                         invoiceHeader.VatAmount = orderheader.VATAmount;
                         // invoiceHeader.TotalAmount = orderheader.PaidAmount;
-                        invoiceHeader.TotalAmount = orderheader.NetAmount;
+
+                       
+                        invoiceHeader.TotalAmount = value;
+                        //invoiceHeader.TotalAmount = orderheader.NetAmount;
                         invoiceHeader.DueDate = orderheader.OrderDate.AddDays(orderheader.PaymentDays);
                         invoiceHeader.IsVat = orderheader.IsVAT;
                         invoiceHeader.IsWHTax = orderheader.IsWHTax;
