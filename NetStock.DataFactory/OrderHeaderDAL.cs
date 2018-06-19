@@ -225,7 +225,7 @@ namespace NetStock.DataFactory
                         {
                             APInvoiceDetail.Add(new APInvoiceDetail
                             {
-                                DocumentNo = dt.OrderNo,
+                                DocumentNo = "",
                                 ItemNo = dt.ItemNo,
                                 AccountCode = "1019",
                                 ChargeCode = dt.ProductCode,
@@ -288,8 +288,8 @@ namespace NetStock.DataFactory
                         apinvoice.DocumentDate = DateTime.Now;
                         apinvoice.BranchID = orderheader.BranchID;
 
-                        apinvoice.ReferenceNo = "";
-                        apinvoice.CreditorCode = "";
+                        apinvoice.ReferenceNo = orderheader.OrderNo;
+                        apinvoice.CreditorCode = "O-001";
                         apinvoice.CreditTerm = "";
                         apinvoice.CurrencyCode = "INR";
 
